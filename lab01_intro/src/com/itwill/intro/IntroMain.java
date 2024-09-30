@@ -6,11 +6,11 @@ package com.itwill.intro; // 패키지 선언문 (한줄 주석, inline-comment)
  */
 public class IntroMain {
 
-	/* 메서드 선언 */
-	public static void main(String[] args) {
-		// 메인 메서드: 자바 프로그램의 시작.
-		System.out.println("Hello.");
-		System.out.println("안녕하세요");
-	}
+    /* 메서드 선언 */
+    public static void main(String[] args) {
+        // 메인 메서드: 자바 프로그램의 시작.
+        System.out.println("Hello.");
+        System.out.println("안녕하세요");
+    }
 
 }
