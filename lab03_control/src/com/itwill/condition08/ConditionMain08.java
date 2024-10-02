@@ -30,6 +30,16 @@ public class ConditionMain08 {
             System.out.println("불합격");
         }
         
+        if (java >= 40 && sql >= 40 && javascript >= 40) {
+            if (average >= 60) {
+                System.out.println("Pass"); // 합격
+            } else {
+                System.out.println("Fail"); // 불합격
+            }
+        } else {
+            System.out.println("Fail"); // 불합격
+        }
+        
     }
 
 }
