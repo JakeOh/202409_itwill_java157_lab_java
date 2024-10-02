@@ -28,61 +28,61 @@ public class ConditionMain04 {
         
         // 방법1:
         if (user == 0 && computer == 0) {
-            // 비김
+            System.out.println("Tie");
         } else if (user == 0 && computer == 1) {
-            // com win
+            System.out.println("Computer wins");
         } else if (user == 0 && computer == 2) {
-            // user win
+            System.out.println("User wins");
         } else if (user == 1 && computer == 0) {
-            // user win
+            System.out.println("User wins");
         } else if (user == 1 && computer == 1) {
-            // 비김
+            System.out.println("Tie");
         } else if (user == 1 && computer == 2) {
-            // com win
+            System.out.println("Computer wins");
         } else if (user == 2 && computer == 0) {
-            // com win
+            System.out.println("Computer wins");
         } else if (user == 2 && computer == 1) {
-            // user win
+            System.out.println("User wins");
         } else { // user=2(보) && computer=2(보)
-            // 비김
+            System.out.println("Tie");
         }
         
         // 방법2:
         if (user == 0) { // 사용자가 가위를 선택한 경우
             if (computer == 0) { // 컴퓨터가 가위인 경우
-                
+                System.out.println("Tie");
             } else if (computer == 1) { // 컴퓨터가 바위인 경우
-                
+                System.out.println("Computer wins");
             } else { // 컴퓨터가 보인 경우
-                
+                System.out.println("User wins");
             }
         } else if (user == 1) { // 사용자가 바위를 선택한 경우
             if (computer == 0) { // 컴퓨터가 가위인 경우
-                
+                System.out.println("User wins");
             } else if (computer == 1) { // 컴퓨터가 바위인 경우
-                
+                System.out.println("Tie");
             } else { // 컴퓨터가 보인 경우
-                
+                System.out.println("Computer wins");
             }
         } else { // 사용자가 보를 선택한 경우
             if (computer == 0) { // 컴퓨터가 가위인 경우
-                
+                System.out.println("Computer wins");
             } else if (computer == 1) { // 컴퓨터가 바위인 경우
-                
+                System.out.println("User wins");
             } else { // 컴퓨터가 보인 경우
-                
+                System.out.println("Tie");
             }
         }
         
         // 방법3:
         if (user == computer) { // 사용자와 컴퓨터의 선택이 같은 경우 -> 비긴 경우
-            
+            System.out.println("Tie");
         } else if ((user == 0 && computer == 2) 
                 || (user == 1 && computer == 0) 
                 || (user == 2 && computer == 1)) { // 사용자가 이긴 경우
-            
+            System.out.println("User wins");
         } else {
-            
+            System.out.println("Computer wins");
         }
         
     }
