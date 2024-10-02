@@ -14,6 +14,17 @@ public class ConditionMain06 {
         int y = scanner.nextInt();
 
         int big; // x, y 중에서 더 큰(크거나 같은) 정수를 저장하기 위한 변수.
+        if (x > y) {
+            big = x;
+        } else {
+            big = y;
+        }
+        System.out.println("big = " + big);
+        
+        // 삼항 연산자: if-else를 간단히 쓰는 문법.
+        // (조건식) ? (조건식이 참일 때 선택할 값) : (조건식이 거짓일 때 선택할 값)
+        int big2 = (x > y) ? x : y;
+        System.out.println("big2 = " + big2);
         
     }
 
