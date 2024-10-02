@@ -37,6 +37,15 @@ public class ConditionMain03 {
         // 평균이 80점 이상이면, "B"라고 출력.
         // 평균이 70점 이상이면, "C"라고 출력.
         // 평균이 70점 미만이면, "F"라고 출력.
+        if (average >= 90) {
+            System.out.println("A");
+        } else if (average >= 80) {
+            System.out.println("B");
+        } else if (average >= 70) {
+            System.out.println("C");
+        } else {
+            System.out.println("F");
+        }
         
     }
 
