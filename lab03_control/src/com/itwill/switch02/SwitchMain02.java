@@ -14,8 +14,9 @@ public class SwitchMain02 {
         
         // code 값이 1 또는 3이면 "남성", 2 또는 4이면 "여성"을 출력.
         switch (code) {
-        case 1:
-        case 3:
+//        case 1:
+//        case 3:
+        case 1, 3: // multi-case 문법(Java 12 버전부터 사용 가능)
             System.out.println("남성");
             break;
         case 2:
@@ -26,6 +27,7 @@ public class SwitchMain02 {
             System.out.println("몰라요~");
         }
 
+        // ctrl+/: 주석 토글. 현재 선택된 행(들)을 주석으로 만들거나, 주석을 해제.
     }
 
 }
