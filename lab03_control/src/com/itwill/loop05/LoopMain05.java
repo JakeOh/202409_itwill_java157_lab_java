@@ -27,6 +27,16 @@ public class LoopMain05 {
             System.out.println(x);
         }
         
+        System.out.println("----------");
+        
+        // 무한 반복문 실행 중에 특정 조건을 만족하면 반복을 종료시키기 위해서 break를 사용.
+        for (int x = 1; ; x++) { // for ()에서 조건식이 없는 경우, 무한 반복문!
+            System.out.println(x);
+            if (x == 5) { // 반복문을 끝내는 조건
+                break; // 반복문을 끝냄.
+            }
+        }
+        
     }
 
 }
