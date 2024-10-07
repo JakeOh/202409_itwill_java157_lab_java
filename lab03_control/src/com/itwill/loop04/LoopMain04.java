@@ -18,8 +18,12 @@ public class LoopMain04 {
         for (int n = 1; n <= 100; n++) {
             int x = n % 10; // n을 10으로 나눈 나머지 -> 1의 자릿수.
             int y = n / 10; // n을 10으로 나눈 몫 -> 10의 자릿수.
+            boolean b1 = (x == 3) || (x == 6) || (x == 9); // 1의 자릿수가 3, 6, 9이면
+            boolean b2 = (y == 3) || (y == 6) || (y == 9); // 10의 자릿수가 3, 6, 9이면
             
-            if (x == 3 || x == 6 || x == 9 || y == 3 || y == 6 || y == 9) {
+            if (b1 && b2) {
+                System.out.print("**\t");
+            } else if (b1 || b2) {
                 System.out.print("*\t");
             } else {
                 System.out.print(n + "\t");
@@ -29,10 +33,29 @@ public class LoopMain04 {
                 System.out.println();
             }
         }
-
+        System.out.println();
+        
         /* (문제 2) 1부터 100까지의 정수들의 합: 5050 */
+        int sum = 0;
+        for (int n = 1; n <= 100; n++) {
+            sum += n; // sum = sum + n;
+        }
+        System.out.println("1 ~ 100 합 = " + sum);
         
         /* (문제 3) 1부터 100까지의 정수들 중 3의 배수들의 합: 1683 */
+        sum = 0;
+        for (int n = 1; n <= 100; n++) {
+            if (n % 3 == 0) {
+                sum += n;
+            }
+        }
+        System.out.println("1 ~ 100 사이의 3의 배수들의 합 = " + sum);
+        
+        sum = 0;
+        for (int n = 3; n < 100; n += 3) {
+            sum += n;
+        }
+        System.out.println("1 ~ 100 사이의 3의 배수들의 합 = " + sum);
         
     }
 
