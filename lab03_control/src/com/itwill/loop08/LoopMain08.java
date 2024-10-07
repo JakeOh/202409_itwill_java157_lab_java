@@ -40,6 +40,16 @@ public class LoopMain08 {
             }
             n++;
         }
+        System.out.println();
+        
+        System.out.println("--- [4] ---");
+        // while 반복문을 사용해서 구구단 2단 출력
+        n = 1;
+        while (n < 10) {
+            System.out.println("2 x " + n + " = " + (2 * n));
+            n++;
+        }
+        
     }
 
 }
