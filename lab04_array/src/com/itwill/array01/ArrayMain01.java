@@ -23,8 +23,17 @@ public class ArrayMain01 {
         //   - 배열의 인덱스는 0부터 시작하는 연속된 정수.
         //   - 배열의 마지막 인덱스 (배열 원소 개수) - 1.
         
-        int[] scores = {100, 91, 95, 80};
+        int[] scores = { 100, 91, 95, 80 };
         System.out.println(scores[0]); // 배열의 첫번째 원소 출력
+        
+        // 모든 배열은 저장된 원소 개수를 알 수 있는 length 속성이 있음.
+        System.out.println("length = " + scores.length);
+        
+        // for 반복문을 사용해서 배열 scores의 모든 원소들을 순서대로 출력.
+        for (int i = 0; i < scores.length; i++) {
+            System.out.println(scores[i]);
+        }
+        
     }
 
 }
