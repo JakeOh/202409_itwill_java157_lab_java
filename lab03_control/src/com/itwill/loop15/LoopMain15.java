@@ -12,23 +12,30 @@ public class LoopMain15 {
         
         while (run) {
             System.out.println("-----------------------------------");
-            System.out.println("1.입금 | 2.출금 | 3.잔고 | 4.종료");
+            System.out.println("1.예금 | 2.출금 | 3.잔고 | 4.종료");
             System.out.println("-----------------------------------");
             System.out.print("선택> ");
             
             int menu = scanner.nextInt();
             switch (menu) {
             case 1:
+                System.out.print("예금액> ");
+                balance += scanner.nextInt();
+                System.out.printf("예금 후 잔고: %d\n", balance);
                 break;
             case 2:
+                System.out.print("출금액> ");
+                balance -= scanner.nextInt();
+                System.out.printf("출금 후 잔고: %d\n", balance);
                 break;
             case 3:
+                System.out.println("잔고: " + balance);
                 break;
             case 4:
                 run = false;
                 break; // switch 종료
             default:
-                
+                System.out.println("메뉴 다시 선택...");
             }
             
         }
