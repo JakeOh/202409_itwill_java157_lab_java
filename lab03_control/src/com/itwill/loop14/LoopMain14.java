@@ -26,8 +26,8 @@ public class LoopMain14 {
         System.out.println("----------");
         
         // 교재 연습문제 6.
-        for (int x = 1; x <= 4; x++) { // x: 줄 번호
-            for (int y = 1; y <= 4; y++) { // y: print()를 호출할 개수
+        for (int x = 1; x <= 4; x++) { // x: 행(가로) 번호
+            for (int y = 1; y <= 4; y++) { // y: 열(세로) 번호
                 if (y <= 4 - x) {
                     System.out.print(" ");
                 } else {
@@ -38,6 +38,29 @@ public class LoopMain14 {
         }
         
         System.out.println("----------");
+        
+        for (int x = 1; x <= 4; x++) {
+            for (int y = 4; y >= 1; y--) {
+                if (y > x) {
+                    System.out.print(" ");
+                } else {
+                    System.out.print("*");
+                }
+            }
+            System.out.println();
+        }
+        
+        System.out.println("----------");
+        
+        for (int x = 1; x <= 4; x++) { // x: 줄 번호
+            for (int y = 1; y <= 4 - x; y++) { // y: 공백 개수
+                System.out.print(" ");
+            }
+            for (int y = 1; y <= x; y++) { // y: * 개수
+                System.out.print("*");
+            }
+            System.out.println();
+        }
         
     }
 
