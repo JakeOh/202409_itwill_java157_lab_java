@@ -17,6 +17,24 @@ public class ArrayMain10 {
             }
             System.out.println();
         }
+        
+        System.out.println("---------------");
+        
+        // (2) 2차원 배열이 가지고 있는 행의 개수는 결정되어 있고, 열의 개수가 결정되지 않은 경우:
+        // 타입[][] 변수이름 = new 타입[행의 개수][];
+        
+        int[][] array2 = new int[3][];
+        
+        array2[0] = new int[3];
+        array2[1] = new int[4];
+        array2[2] = new int[2];
+        
+        for (int[] arr : array2) {
+            for (int x : arr) {
+                System.out.print(x + " ");
+            }
+            System.out.println();
+        }
 
     }
 
