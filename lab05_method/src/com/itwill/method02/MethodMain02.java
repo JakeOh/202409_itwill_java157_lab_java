@@ -27,9 +27,20 @@ public class MethodMain02 {
         result = add(10.0, 2.0);
         System.out.println("result = " + result);
     
-        // TODO: subtract() 메서드를 호출하고 그 결과를 출력.
+        // subtract() 메서드를 호출하고 그 결과를 출력.
+        result = subtract(1.0, 2.0);
+        System.out.println("result = " + result);
+        
+        result = subtract(2.0, 1.0);
+        System.out.println("result = " + result);
+        
         // mulitply() 메서드를 호출하고 그 결과를 출력.
+        result = multiply(3, 2);
+        System.out.println("result = " + result);
+        
         // divide() 메서드를 호출하고 그 결과를 출력.
+        result = divide(1, 2);
+        System.out.println("result = " + result);
     }
     
     // 메서드 선언 -> 문서 주석(documentation comment)를 함께 작성할 수 있음.
@@ -45,15 +56,14 @@ public class MethodMain02 {
     }
     
     /**
-     * 숫자 2개를 전달받아서, 두 숫자의 뺄셈 결과(x - y)를 리턴.
+     * 숫자 2개를 전달받아서, 두 숫자의 뺄셈 결과({@code x - y})를 리턴.
      * 
      * @param x double.
      * @param y double.
      * @return x - y.
      */
     public static double subtract(double x, double y) {
-        // FIXME
-        return 0.0;
+        return x - y;
     }
     
     /**
@@ -63,7 +73,9 @@ public class MethodMain02 {
      * @param y double.
      * @return x * y.
      */
-    // TODO
+    public static double multiply(double x, double y) {
+        return x * y;
+    }
     
     /**
      * divide. 숫자 2개를 전달받아서, 첫번째 아규먼트를 두번째 아규먼트로 나눈 값을 리턴.
@@ -72,6 +84,8 @@ public class MethodMain02 {
      * @param y double.
      * @return x / y.
      */
-    // TODO
+    public static double divide(double x, double y) {
+        return x / y;
+    }
     
 }
