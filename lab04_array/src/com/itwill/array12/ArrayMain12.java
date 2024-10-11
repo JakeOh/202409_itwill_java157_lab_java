@@ -15,19 +15,19 @@ public class ArrayMain12 {
             System.out.println("1.학생수 | 2.점수입력 | 3.점수리스트 | 4.분석 | 5.종료");
             System.out.println("-------------------------------------------------------");
             System.out.print("선택> ");
-            int selectNo = scanner.nextInt();
+            int selectNo = scanner.nextInt(); // Integer.parseInt(scanner.nextLine());
             
             switch (selectNo) {
             case 1:
                 System.out.print("학생수 입력>> ");
-                studentNum = scanner.nextInt();
-                scores = new int[studentNum];
+                studentNum = scanner.nextInt(); // Integer.parseInt(scanner.nextLine());
+                scores = new int[studentNum]; // 배열의 길이를 학생수만큼 생성.
                 break;
             case 2:
                 if (studentNum > 0) {
                     for (int i = 0; i < studentNum; i++) {
                         System.out.print("점수 입력>> ");
-                        scores[i] = scanner.nextInt();
+                        scores[i] = scanner.nextInt(); // Integer.parseInt(scanner.nextLine());
                     }
                 } else {
                     System.out.println("학생수를 먼저 입력하세요...");
@@ -35,6 +35,11 @@ public class ArrayMain12 {
                 break;
             case 3:
                 if (studentNum > 0) {
+//                    int i = 0;
+//                    for (int s : scores) {
+//                        System.out.printf("scores[%d] %d\n", i, s);
+//                        i++;
+//                    }
                     for (int i = 0; i < studentNum; i++) {
                         System.out.printf("scores[%d] %d\n", i, scores[i]);
                     }
