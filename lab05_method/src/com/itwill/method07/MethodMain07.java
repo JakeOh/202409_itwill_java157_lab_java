@@ -18,6 +18,19 @@ public class MethodMain07 {
         
         sum = addAll();
         System.out.println("sum = " + sum);
+        
+        int result = calculate("+", 1, 3, 10);
+        System.out.println("result = " + result);
+        
+        result = calculate("+");
+        System.out.println("result = " + result);
+        
+        result = calculate("*", 2, 3, 4, 5);
+        System.out.println("result = " + result);
+        
+        result = calculate("*");
+        System.out.println("result = " + result);
+        
     }
     
     /*
@@ -54,8 +67,24 @@ public class MethodMain07 {
      * (3) 아규먼트 op가 "+"나 "*"가 아닌 경우에는 0을 리턴.
      */
     public static int calculate(String op, int... values) {
-        // TODO
-        return 0;
+        int result = 0;
+        
+        switch(op) {
+        case "+":
+            for (int x : values) {
+                result += x;
+            }
+            break;
+        case "*":
+            result = 1;
+            for (int x : values) {
+                result *= x; // result = result * x;
+            }
+            break;
+//        default:
+        }
+        
+        return result;
     }
     
 }
