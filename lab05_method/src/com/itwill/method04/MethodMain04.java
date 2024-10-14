@@ -33,7 +33,11 @@ public class MethodMain04 {
      * @param x 정수(int). 짝수/홀수를 검사할 정수.
      * @return x가 짝수이면 true, 그렇지 않으면 false.
      */
-    // TODO: 
+    public static boolean isEven(int x) {
+        boolean result = (x % 2 == 0) ? true : false;
+        
+        return result;
+    }
     
     /**
      * whoIsbig.
@@ -43,7 +47,9 @@ public class MethodMain04 {
      * @param y 정수(int). 크기를 비교할 정수.
      * @return x > y 이면 x, 그렇지 않으면 y.
      */
-    // TODO:
+    public static int whoIsBig(int x, int y) {
+        return (x > y) ? x : y;
+    }
     
     /**
      * parseGenderCode.
@@ -53,6 +59,20 @@ public class MethodMain04 {
      * @return 코드 값이 1 또는 3이면 "male", 코드 값이 2 또는 4이면 "female".
      * 만약 그 이외의 코드 값인 경우에는 "unknown"을 리턴.
      */
-    // TODO:
+    public static String parseGenderCode(int code) {
+        String result = null;
+        switch (code) {
+        case 1, 3:
+            result = "male";
+            break;
+        case 2, 4:
+            result = "female";
+            break;
+        default:
+            result = "unknown";
+        }
+        
+        return result;
+    }
     
 }
