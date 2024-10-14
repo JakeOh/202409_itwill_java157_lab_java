@@ -17,9 +17,11 @@ public class ClassMain01 {
     public static void main(String[] args) {
         String s1 = "안녕하세요!";
         System.out.println("s1 length = " + s1.length());
+        System.out.println("s1 concat = " + s1.concat("비가 오네요..."));
 
         String s2 = "hello";
         System.out.println("s2 length = " + s2.length());
+        System.out.println("s2 concat = " + s2.concat("Java"));
     }
 
 }
