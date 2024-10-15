@@ -5,6 +5,16 @@ public class Person {
     String name;
     int age;
     
+    // constructor(생성자)
+    public Person() {
+        
+    }
+    
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
     // method(메서드)
     public void sayHello() {
         System.out.println("안녕하세요, 저는 " + this.name + "입니다.");

@@ -13,6 +13,10 @@ public class ClassMain03 {
         p1.age = 16;
         p1.sayHello();
         
+        // Person 타입의 변수 선언, 아규먼트를 갖는 생성자를 호출해서 초기화.
+        Person p2 = new Person("홍길동", 20);
+        System.out.println("p2=" + p2);
+        p2.sayHello();
     }
 
 }
