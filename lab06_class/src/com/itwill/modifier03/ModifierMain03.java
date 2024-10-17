@@ -28,6 +28,14 @@ public class ModifierMain03 {
         m1.setPassword("!@#$");
         System.out.println("변경 후 m1 pw: " + m1.getPassword());
 
+        // Person 타입의 객체를 선언, 초기화.
+        Person p1 = new Person("홍길동", 16);
+        System.out.println("이름: " + p1.getName());
+        System.out.println("나이: " + p1.getAge());
+        
+        p1.setAge(-1);
+        System.out.println("나이: " + p1.getAge());
+        
     }
 
 }
