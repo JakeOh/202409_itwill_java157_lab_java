@@ -72,10 +72,14 @@ public class ContactMain {
     }
 
     public void printContactList() {
+        System.out.println("\n--- 연락처 리스트 ---");
+        
         for (int i = 0; i < count; i++) {
             System.out.printf("[%d] ", i);
             contacts[i].info();
         }
+        
+        System.out.println("---------------------");
     }
     
 }
