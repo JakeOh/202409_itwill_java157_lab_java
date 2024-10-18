@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ContactMain {
     // 상수 정의
-    private static final int MAX_LENGTH = 10;
+    private static final int MAX_LENGTH = 3;
     
     // ContactMain 클래스의 field를 선언과 동시에 초기화.
     private Scanner scanner = new Scanner(System.in); // 콘솔 입력을 위해서
@@ -34,7 +34,11 @@ public class ContactMain {
             case 3:
                 app.selectContactByIndex();
                 break;
+            case 4:
+                app.updateContactByIndex();
+                break;
             default:
+                System.out.println("메뉴 번호를 다시 선택...");
             }
         }
 
@@ -85,10 +89,36 @@ public class ContactMain {
     
     public void selectContactByIndex() {
         System.out.println("\n--- 인덱스 검색 ---");
-        System.out.print("검색할 인덱스 입력> ");
+        System.out.print("검색할 연락처 인덱스 입력> ");
         int index = Integer.parseInt(scanner.nextLine());
         
         // 해당 인덱스의 배열 원소를 출력.
+        contacts[index].info();
+    }
+    
+    public void updateContactByIndex() {
+        System.out.println("\n--- 연락처 수정 ---");
+        System.out.print("수정할 연락처 인덱스 입력> ");
+        int index = Integer.parseInt(scanner.nextLine());
+        
+        System.out.print("수정 전: ");
+        contacts[index].info();
+        
+        System.out.print("이름 입력> ");
+        String name = scanner.nextLine();
+        
+        System.out.print("전화번호 입력> ");
+        String phone = scanner.nextLine();
+        
+        System.out.print("이메일 입력> ");
+        String email = scanner.nextLine();
+        
+//        contacts[index].setName(name);
+//        contacts[index].setEmail(email);
+//        contacts[index].setPhone(phone);
+        contacts[index] = new Contact(name, phone, email);
+        
+        System.out.print("수정 후: ");
         contacts[index].info();
     }
     
