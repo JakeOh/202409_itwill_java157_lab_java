@@ -58,6 +58,25 @@ public class ModifierMain06 {
         
         final int version = 1;
         // version = 2; //-> final 지역 변수는 값을 재할당(변경)할 수 없음.
+        
+        // StaticExample 타입의 객체 생성 전
+        // 클래스 이름으로 참조해서 static 필드를 사용할 수 있음.
+        System.out.println("StaticExample.y = " + StaticExample.y);
+        
+        // 클래스 이름으로 참조해서 static 메서드를 호출할 수 있음.
+        StaticExample.printFields2();
+        
+        // StaticExample 타입 객체 생성:
+        StaticExample ex1 = new StaticExample();
+        ex1.printFields();
+        
+        StaticExample ex2 = new StaticExample();
+        ex2.x = 123;
+        //ex2.y = 456; // 문법에서 허용은 하지만, 권장하지 않는 코드.
+        StaticExample.y = 456; // 권장하는 코드.
+        ex2.printFields();
+        
+        ex1.printFields();
     }
 
 }
