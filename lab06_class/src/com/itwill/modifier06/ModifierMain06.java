@@ -77,6 +77,20 @@ public class ModifierMain06 {
         ex2.printFields();
         
         ex1.printFields();
+        
+        // test() 메서드 호출?
+        ModifierMain06 app = new ModifierMain06("비가 오네요...");
+        app.test();
+        
+        printVersion();
+    }
+    
+    public void test() {
+        System.out.println(this.message);
+    }
+    
+    public static void printVersion() {
+        System.out.println(VERSION);
     }
 
 }
