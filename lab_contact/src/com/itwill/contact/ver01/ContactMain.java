@@ -32,6 +32,7 @@ public class ContactMain {
                 app.printContactList();
                 break;
             case 3:
+                app.selectContactByIndex();
                 break;
             default:
             }
@@ -80,6 +81,15 @@ public class ContactMain {
         }
         
         System.out.println("---------------------");
+    }
+    
+    public void selectContactByIndex() {
+        System.out.println("\n--- 인덱스 검색 ---");
+        System.out.print("검색할 인덱스 입력> ");
+        int index = Integer.parseInt(scanner.nextLine());
+        
+        // 해당 인덱스의 배열 원소를 출력.
+        contacts[index].info();
     }
     
 }
