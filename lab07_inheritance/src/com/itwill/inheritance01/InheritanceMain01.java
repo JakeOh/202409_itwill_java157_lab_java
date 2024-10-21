@@ -8,14 +8,31 @@ public class InheritanceMain01 {
         System.out.println(tv1.toString());
         
         tv1.powerOnOff();
-        System.out.println(tv1.toString());
         
         tv1.channelUp();
         tv1.channelUp();
-        System.out.println(tv1.toString());
+        tv1.channelUp();
+        tv1.channelUp();
+        
+        tv1.channelDown();
+        tv1.channelDown();
+        
+        tv1.volumeUp();
+        tv1.volumeUp();
+        tv1.volumeUp();
+        tv1.volumeUp();
+        
+        tv1.volumeDown();
+        tv1.volumeDown();
+        tv1.volumeDown();
+        tv1.volumeDown();
         
         tv1.powerOnOff();
-        System.out.println(tv1.toString());
+        
+        // SmartTv 타입의 변수 선언, 초기화.
+        SmartTv tv2 = new SmartTv();
+        tv2.powerOnOff();
+        tv2.powerOnOff();
     }
 
 }

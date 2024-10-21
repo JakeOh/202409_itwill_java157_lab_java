@@ -61,6 +61,7 @@ public class BasicTv {
         } else { // TV가 꺼져 있으면
             powerOn = true; // TV를 켬.
         }
+        System.out.println("powerOn: " + powerOn);
         
         return powerOn;
     }
@@ -69,10 +70,17 @@ public class BasicTv {
      * channelUp. TV가 켜져 있을 때 현재 채널의 값을 1 증가.
      * 만약 현재 채널 값이 채널의 최댓값(MAX_CHANNEL)인 경우, 채널의 최솟값(MIN_CHANNEL)으로 변경.
      * 
-     * @return 바뀐 현재 채널 값.
+     * @return 현재 채널 값.
      */
     public int channelUp() {
-        channel++;
+        if (powerOn) { // TV가 켜져 있을 때
+            if (channel < MAX_CHANNEL) { // 채널이 최댓값보다 작을 때
+                channel++; // 1 증가
+            } else { // 채널이 최댓값일 때
+                channel = MIN_CHANNEL; // 채널을 최솟값으로 변경.
+            }
+        }
+        System.out.println("channel: " + channel);
         
         return channel;
     }
@@ -84,7 +92,14 @@ public class BasicTv {
      * @return 바뀐 현재 채널 값.
      */
     public int channelDown() {
-        channel--;
+        if (powerOn) {
+            if (channel > MIN_CHANNEL) {
+                channel--;
+            } else {
+                channel = MAX_CHANNEL;
+            }
+        }
+        System.out.println("channel: " + channel);
         
         return channel;
     }
@@ -96,7 +111,13 @@ public class BasicTv {
      * @return 바뀐 현재 음량 값.
      */
     public int volumeUp() {
-        volume++;
+        // if (powerOn && volume < MAX_VOLUME) { ... }
+        if (powerOn) {
+            if (volume < MAX_VOLUME) {
+                volume++;
+            }
+        }
+        System.out.println("volume: " + volume);
         
         return volume;
     }
@@ -108,7 +129,13 @@ public class BasicTv {
      * @return 바뀐 현재 음량 값.
      */
     public int volumeDown() {
-        volume--;
+        // if (powerOn && volume > MIN_VOLUME)
+        if (powerOn) {
+            if (volume > MIN_VOLUME) {
+                volume--;
+            }
+        }
+        System.out.println("volume: " + volume);
         
         return volume;
     }
