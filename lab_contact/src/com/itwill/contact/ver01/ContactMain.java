@@ -56,6 +56,11 @@ public class ContactMain {
     }
     
     public void saveNewContact() {
+        if (count == MAX_LENGTH) {
+            System.out.println(">>> 저장 공간 부족");
+            return; // 메서드 종료
+        }
+        
         System.out.println("\n--- 새 연락처 저장 ---");
         
         System.out.print("이름 입력> ");
@@ -91,17 +96,26 @@ public class ContactMain {
         System.out.print("검색할 연락처 인덱스 입력> ");
         int index = Integer.parseInt(scanner.nextLine());
         
-        // 해당 인덱스의 배열 원소를 출력.
-        contacts[index].info();
+        if (index >= 0 && index < count) { 
+            // 해당 인덱스의 배열 원소를 출력.
+            System.out.println(contacts[index].toString());
+        } else {
+            System.out.println(">>> 해당 인덱스에는 연락처 정보가 없습니다.");
+        }
     }
     
     public void updateContactByIndex() {
         System.out.println("\n--- 연락처 수정 ---");
+        
         System.out.print("수정할 연락처 인덱스 입력> ");
         int index = Integer.parseInt(scanner.nextLine());
+        if (index < 0 || index >= count) {
+            System.out.println(">>> 해당 인덱스에는 수정할 연락처 정보가 없습니다.");
+            return; // 메서드 종료
+        }
         
-        System.out.print("수정 전: ");
-        contacts[index].info();
+        System.out.print(">>> 수정 전: ");
+        System.out.println(contacts[index].toString());
         
         System.out.print("이름 입력> ");
         String name = scanner.nextLine();
@@ -113,12 +127,12 @@ public class ContactMain {
         String email = scanner.nextLine();
         
 //        contacts[index].setName(name);
-//        contacts[index].setEmail(email);
 //        contacts[index].setPhone(phone);
+//        contacts[index].setEmail(email);
         contacts[index] = new Contact(name, phone, email);
         
-        System.out.print("수정 후: ");
-        contacts[index].info();
+        System.out.print(">>> 수정 후: ");
+        System.out.println(contacts[index].toString());
     }
     
 }
