@@ -1,6 +1,6 @@
 package com.itwill.inheritance01;
 
-public class BasicTv {
+public class BasicTv /* extends Object */ {
     // 상수 선언
     public static final int MAX_CHANNEL = 3;
     public static final int MIN_CHANNEL = 0;
