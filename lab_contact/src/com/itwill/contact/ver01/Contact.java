@@ -49,5 +49,12 @@ public class Contact {
         System.out.printf("Contact(name=%s, phone=%s, email=%s)\n",
                 this.name, this.phone, this.email);
     }
+    
+    public String toString() {
+        return "Contact(name=" + this.name
+                + ", phone=" + this.phone
+                + ", email=" + this.email
+                + ")";
+    }
 
 }

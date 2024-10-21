@@ -80,8 +80,7 @@ public class ContactMain {
         System.out.println("\n--- 연락처 리스트 ---");
         
         for (int i = 0; i < count; i++) {
-            System.out.printf("[%d] ", i);
-            contacts[i].info();
+            System.out.printf("[%d] %s\n", i, contacts[i].toString());
         }
         
         System.out.println("---------------------");
