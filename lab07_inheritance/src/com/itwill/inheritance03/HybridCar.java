@@ -30,7 +30,7 @@ public class HybridCar extends Car {
     public void drive() {
         // super.drive(); //-> 상위 타입의 메서드를 명시적으로 호출.
         System.out.printf("하이브리드 자동차 운전중(속력: %d, 연료: %d, 배터리:%d)\n",
-                getSpeed(), getFuel(), battery); 
+                getSpeed(), getFuel(), battery);
     }
     
 }
