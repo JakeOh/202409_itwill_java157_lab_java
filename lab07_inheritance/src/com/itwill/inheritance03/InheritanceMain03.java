@@ -17,6 +17,9 @@ public class InheritanceMain03 {
         // SuperType var = new SubType();
         Car car3 = new HybridCar(0, 0, 0);
         
+        // (주의) 하위 타입으로 선언된 변수에 상위 타입의 객체를 할당할 수는 없음.
+        // HybridCar hcar = new Car(0, 0);
+
         // car3.charge();
         //-> 상위 타입으로 선언된 변수이기 때문에 하위 타입에서 선언된 메서드를 호출할 수 없음.
         
@@ -27,9 +30,6 @@ public class InheritanceMain03 {
         //-> 다형성으로 선언된 변수에서 오버라이드된 메서드를 호출하면,
         // 하위 타입에서 재정의된 내용이 실행됨!
 
-        
-        // (주의) 하위 타입으로 선언된 변수에 상위 타입의 객체를 할당할 수는 없음.
-        // HybridCar hcar = new Car(0, 0);
         
     }
 
