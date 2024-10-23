@@ -1,6 +1,8 @@
 package com.itwill.interface01;
 
 import com.itwill.database.Database;
+import com.itwill.database.mysql.MySqlDatabase;
+import com.itwill.database.oracle.OracleDatabase;
 
 /*
  * 인터페이스(interface):
@@ -26,6 +28,16 @@ public class InterfaceMain01 {
     public static void main(String[] args) {
         System.out.println(Database.VERSION); //-> public static
 //        Database.VERSION = 2; //-> final
+        
+        // OracleDatabase 객체를 생성하고, 메서드들을 사용.
+        // MySqlDatabase 객체를 생성, 메서드 사용.
+        Database db = new MySqlDatabase();
+        
+        int result = db.insert("오쌤", "1234-5678");
+        System.out.println("insert result = " + result);
+        
+        result = db.select();
+        System.out.println("select result = " + result);
     }
 
 }
