@@ -28,6 +28,20 @@ class Dog extends Animal {
     }
 }
 
+class Fish extends Animal {
+    @Override
+    public void move() {
+        System.out.println("물고기 스윔스윔...");
+    }
+}
+
+class Bird extends Animal {
+    @Override
+    public void move() {
+        System.out.println("새는 훨훨~~~");
+    }
+}
+
 public class InheritanceMain07 {
     
     public static void main(String[] args) {
@@ -35,6 +49,16 @@ public class InheritanceMain07 {
 
         Animal dog = new Dog(); // 다형성
         dog.move();
+        
+        Animal[] animals = {
+                dog,
+                new Fish(),
+                new Bird(),
+        };
+        
+        for (Animal a : animals) {
+            a.move();
+        }
         
     }
 
