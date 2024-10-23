@@ -28,6 +28,16 @@ public class InheritanceMain06 {
         System.out.println(pt3.hashCode());
         System.out.println(pt1.equals(pt3));
         
+        Member m1 = new Member("admin", "1234");
+        System.out.println("m1: " + m1);
+        System.out.println("m1 hash: " + m1.hashCode());
+        
+        Member m2 = new Member("admin", "admin1234");
+        System.out.println("m2: " + m2);
+        System.out.println("m2 hash: " + m2.hashCode());
+        
+        System.out.println("m1 equals m2: " + m1.equals(m2));
+        
     }
 
 }
