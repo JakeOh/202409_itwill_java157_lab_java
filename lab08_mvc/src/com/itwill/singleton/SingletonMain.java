@@ -12,7 +12,16 @@ package com.itwill.singleton;
 public class SingletonMain {
 
     public static void main(String[] args) {
+        Captain captain1 = Captain.getInstance();
+        System.out.println("captain1 = " + captain1);
         
+        Captain captain2 = Captain.getInstance();
+        System.out.println("captain2 = " + captain2);
+        System.out.println("captain2 name = " + captain2.getName());
+        
+        captain2.setName("아이언맨");
+        System.out.println("captain2 name = " + captain2.getName());
+        System.out.println("captain1 name = " + captain1.getName());
     }
 
 }
