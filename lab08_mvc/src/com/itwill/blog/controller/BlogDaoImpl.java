@@ -33,6 +33,17 @@ public class BlogDaoImpl implements BlogDao {
         return (count == MAX_LENGTH);
     }
     
+    /**
+     * 인덱스가 배열의 유효한 인덱스인 지를 검사.
+     * 인덱스가 0 이상이고, 배열에 저장된 원소 개수보다 작으면 유효한 인덱스(true 리턴),
+     * 그렇지 않으면 유효하지 않은 인덱스(false 리턴).
+     * @param index 유효한 지 여부를 검사할 인덱스. 정수.
+     * @return true/false.
+     */
+    public boolean isValidIndex(int index) {
+        return (index >= 0) && (index < count);
+    }
+    
     @Override
     public int create(Blog blog) {
         if (isMemoryFull()) {
@@ -59,12 +70,19 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public Blog read(int index) {
-        
-        return blogs[index];
+        if (isValidIndex(index)) {
+            return blogs[index];
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int update(int index, Blog blog) {
+        if (!isValidIndex(index)) {
+            return 0;
+        }
+        
         blogs[index].setTitle(blog.getTitle());
         blogs[index].setContent(blog.getContent());
         

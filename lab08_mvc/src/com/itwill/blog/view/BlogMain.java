@@ -54,6 +54,11 @@ public class BlogMain {
         System.out.print("인덱스> ");
         int index = Integer.parseInt(scanner.nextLine());
         
+        if (!((BlogDaoImpl) dao).isValidIndex(index)) {
+            System.out.println(">>> 해당 인덱스에는 블로그가 없습니다.");
+            return;
+        }
+        
         // 업데이트 전의 블로그 내용을 출력.
         Blog before = dao.read(index);
         System.out.println("업데이트 전: " + before);
@@ -83,6 +88,11 @@ public class BlogMain {
         // 검색할 블로그의 인덱스를 입력받음:
         System.out.print("인덱스> ");
         int index = Integer.parseInt(scanner.nextLine());
+        
+        if (!((BlogDaoImpl) dao).isValidIndex(index)) {
+            System.out.println(">>> 해당 인덱스에는 블로그가 없습니다.");
+            return;
+        }
         
         // 컨트롤러의 메서드를 호출해서 입력받은 인덱스의 블로그를 읽어옴.
         Blog blog = dao.read(index);
