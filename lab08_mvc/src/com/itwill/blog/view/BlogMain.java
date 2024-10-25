@@ -5,6 +5,7 @@ import java.util.Scanner;
 //import com.itwill.blog.controller.BlogController;
 import com.itwill.blog.controller.BlogDao;
 import com.itwill.blog.controller.BlogDaoImpl;
+import com.itwill.blog.model.Blog;
 
 // MVC 아키텍쳐에서 View(UI, 입/출력)를 담당하는 클래스.
 public class BlogMain {
@@ -47,8 +48,28 @@ public class BlogMain {
     }
 
     private void createNewBlog() {
-        // TODO
-        dao.create(null);
+        System.out.println("\n--- 새 블로그 작성 ---");
+        
+        // 1. 새 블로그 작성에 필요한 제목/내용/작성자를 입력:
+        System.out.print("제목> ");
+        String title = scanner.nextLine();
+        
+        System.out.print("내용> ");
+        String content = scanner.nextLine();
+        
+        System.out.print("작성자> ");
+        String author = scanner.nextLine();
+        
+        // 2. Blog 타입 객체 생성:
+        Blog blog = new Blog(title, content, author); 
+        
+        // 3. MVC 아키텍쳐에서 Controller의 메서드를 호출해서 블로그 작성(저장) 기능을 수행.
+        int result = dao.create(blog);
+        if (result == 1) {
+            System.out.println(">> 새 블로그 작성 성공");
+        } else {
+            System.out.println(">> 새 블로그 작성 실패");
+        }
     }
     
     private MainMenu selectMainMenu() {
