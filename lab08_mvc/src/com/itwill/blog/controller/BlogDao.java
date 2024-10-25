@@ -3,6 +3,7 @@ package com.itwill.blog.controller;
 import com.itwill.blog.model.Blog;
 
 // MVC 아키텍쳐에서 Controller(기능, 로직)를 담당하는 인터페이스.
+// DAO(Data Access Object)
 public interface BlogDao {
     /**
      * 블로그(제목, 내용, 작성자)를 배열에 저장하는 메서드.
