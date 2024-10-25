@@ -25,8 +25,20 @@ public class BlogDaoImpl implements BlogDao {
     
     private int count = 0; // 배열 blogs에 저장된 원소 개수. 새 블로그가 저장될 때마다 ++.
     
+    /**
+     * 블로그를 저장하는 배열이 가득 차 있으면 true, 빈 공간(null)이 있으면 false를 리턴.
+     * @return true/false
+     */
+    public boolean isMemoryFull() {
+        return (count == MAX_LENGTH);
+    }
+    
     @Override
     public int create(Blog blog) {
+        if (isMemoryFull()) {
+            return 0;
+        }
+        
         // 배열 blogs에 원소를 저장하고 count를 증가.
         blogs[count] = blog;
         count++;
@@ -53,9 +65,10 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public int update(int index, Blog blog) {
-        System.out.println("블로그 업데이트");
-        // TODO Auto-generated method stub
-        return 0;
+        blogs[index].setTitle(blog.getTitle());
+        blogs[index].setContent(blog.getContent());
+        
+        return 1;
     }
 
 }

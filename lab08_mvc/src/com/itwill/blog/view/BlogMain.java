@@ -36,7 +36,7 @@ public class BlogMain {
                 app.readBlogByIndex();
                 break;
             case UPDATE: // 업데이트
-                // TODO
+                app.updateBlog();
                 break;
             default: // case UNKNOWN:
                 System.out.println(">>> 메뉴(0 ~ 4)를 다시 선택하세요...");
@@ -45,6 +45,36 @@ public class BlogMain {
         }
 
         System.out.println("*** 블로그 앱 종료 ***");
+    }
+
+    private void updateBlog() {
+        System.out.println("\n--- 블로그 업데이트 ---");
+        
+        // 업데이트할 블로그의 인덱스를 입력받음.
+        System.out.print("인덱스> ");
+        int index = Integer.parseInt(scanner.nextLine());
+        
+        // 업데이트 전의 블로그 내용을 출력.
+        Blog before = dao.read(index);
+        System.out.println("업데이트 전: " + before);
+        
+        // 업데이트할 제목과 내용을 입력받음.
+        System.out.print("제목> ");
+        String title = scanner.nextLine();
+        
+        System.out.print("내용> ");
+        String content = scanner.nextLine();
+        
+        Blog after = new Blog(title, content, null);
+        // new Blog(title, content, before.getAuthor());
+        
+        // 컨트롤러의 메서드를 호출해서 해당 인덱스의 블로그의 제목/내용을 업데이트. 결과 출력.
+        int result = dao.update(index, after);
+        if (result == 1) {
+            System.out.println(">>> 블로그 업데이트 성공");
+        } else {
+            System.out.println(">>> 블로그 업데이트 실패");
+        }
     }
 
     private void readBlogByIndex() {
@@ -73,6 +103,10 @@ public class BlogMain {
 
     private void createNewBlog() {
         System.out.println("\n--- 새 블로그 작성 ---");
+        if (((BlogDaoImpl) dao).isMemoryFull()) {
+            System.out.println(">>> 저장 공간이 부족합니다.");
+            return;
+        }
         
         // 1. 새 블로그 작성에 필요한 제목/내용/작성자를 입력:
         System.out.print("제목> ");
@@ -90,9 +124,9 @@ public class BlogMain {
         // 3. MVC 아키텍쳐에서 Controller의 메서드를 호출해서 블로그 작성(저장) 기능을 수행.
         int result = dao.create(blog);
         if (result == 1) {
-            System.out.println(">> 새 블로그 작성 성공");
+            System.out.println(">>> 새 블로그 작성 성공");
         } else {
-            System.out.println(">> 새 블로그 작성 실패");
+            System.out.println(">>> 새 블로그 작성 실패");
         }
     }
     
