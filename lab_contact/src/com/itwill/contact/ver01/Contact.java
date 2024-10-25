@@ -1,5 +1,6 @@
 package com.itwill.contact.ver01;
 
+// MVC 아키텍쳐에서 Model 역할을 담당하는 클래스.
 // 연락처 데이터(이름, 전화번호, 이메일) 저장하는 클래스.
 public class Contact {
     // field
@@ -50,6 +51,7 @@ public class Contact {
                 this.name, this.phone, this.email);
     }
     
+    @Override
     public String toString() {
         return "Contact(name=" + this.name
                 + ", phone=" + this.phone
