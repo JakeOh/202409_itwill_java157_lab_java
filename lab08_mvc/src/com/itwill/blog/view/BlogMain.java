@@ -30,10 +30,10 @@ public class BlogMain {
                 app.createNewBlog();
                 break;
             case READ_ALL: // 목록보기
-                // TODO
+                app.readAllBlogs();
                 break;
             case READ_BY_INDEX: // 상세보기
-                // TODO
+                app.readBlogByIndex();
                 break;
             case UPDATE: // 업데이트
                 // TODO
@@ -45,6 +45,30 @@ public class BlogMain {
         }
 
         System.out.println("*** 블로그 앱 종료 ***");
+    }
+
+    private void readBlogByIndex() {
+        System.out.println("\n--- 블로그 상세 보기 ---");
+        
+        // 검색할 블로그의 인덱스를 입력받음:
+        System.out.print("인덱스> ");
+        int index = Integer.parseInt(scanner.nextLine());
+        
+        // 컨트롤러의 메서드를 호출해서 입력받은 인덱스의 블로그를 읽어옴.
+        Blog blog = dao.read(index);
+        System.out.println(blog);
+    }
+
+    private void readAllBlogs() {
+        System.out.println("\n--- 블로그 목록 ---");
+
+        // 컨트롤러 메서드를 호출해서 블로그 배열을 가져옴.
+        Blog[] blogs = dao.read();
+        
+        // 블로그 배열의 인덱스와 제목만 출력
+        for (int i = 0; i < blogs.length; i++) {
+            System.out.printf("[%d] %s\n", i, blogs[i].getTitle());
+        }
     }
 
     private void createNewBlog() {

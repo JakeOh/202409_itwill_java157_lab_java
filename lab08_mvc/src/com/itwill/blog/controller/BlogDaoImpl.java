@@ -36,16 +36,19 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public Blog[] read() {
-        System.out.println("블로그 목록 보기");
-        // TODO Auto-generated method stub
-        return null;
+        // 배열 blogs에서 null이 아닌 원소들만 복사해서 리턴.
+        Blog[] result = new Blog[count]; // 현재까지 저장된 원소 개수로 배열을 생성.
+        for (int i = 0; i < count; i++) {
+            result[i] = blogs[i]; // 배열 blogs의 원소를 result에 복사.
+        }
+        
+        return result;
     }
 
     @Override
     public Blog read(int index) {
-        System.out.println("블로그 상세 보기");
-        // TODO Auto-generated method stub
-        return null;
+        
+        return blogs[index];
     }
 
     @Override
