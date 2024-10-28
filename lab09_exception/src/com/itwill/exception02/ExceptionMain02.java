@@ -1,5 +1,7 @@
 package com.itwill.exception02;
 
+import java.util.Scanner;
+
 /*
  * try-catch 문장을 사용한 예외 처리:
  * 
@@ -22,8 +24,28 @@ package com.itwill.exception02;
 public class ExceptionMain02 {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        Scanner scanner = new Scanner(System.in);
+        
+        try {
+            System.out.print("정수 x = ");
+            int x = Integer.parseInt(scanner.nextLine());
+            
+            System.out.print("정수 y = ");
+            int y = Integer.parseInt(scanner.nextLine());
+            
+            int z = x / y;
+            System.out.println("몫 = " + z);
+        } catch (NumberFormatException e) {
+            System.out.println("x와 y는 모두 정수여야 합니다.");
+            System.out.println(e.getMessage());
+        } catch (ArithmeticException e) {
+            System.out.println("나누는 수 y는 0이 될 수 없음.");
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println("--- finally ---");
+        }
 
+        System.out.println("--- 프로그램 종료 ----");
     }
 
 }
