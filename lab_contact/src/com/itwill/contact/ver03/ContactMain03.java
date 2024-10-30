@@ -38,6 +38,7 @@ public class ContactMain03 {
                 break;
             case DELETE:
                 app.deleteContact();
+                break;
             default:
                 System.out.println("메뉴(0 ~ 5)를 다시 선택하세요.");
             }
