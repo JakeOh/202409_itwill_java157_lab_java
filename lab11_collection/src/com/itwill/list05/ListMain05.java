@@ -43,6 +43,21 @@ public class ListMain05 {
         
         // 삭제할 id를 입력 받고, 처음 id가 일치하는 멤버 객체를 리스트에서 삭제.
         // 삭제 후 리스트를 출력.
+        System.out.print("삭제할 ID> ");
+        String idToDel = scanner.nextLine();
+        Member memToDel = new Member(idToDel, null);
+        members.remove(memToDel);
+        System.out.println(members);
+        
+        System.out.print("삭제할 ID 2> ");
+        String id = scanner.nextLine();
+        for (Member m : members) {
+            if (m.getId().equals(id)) {
+                members.remove(m);
+                break;
+            }
+        }
+        System.out.println(members);
         
     }
 
