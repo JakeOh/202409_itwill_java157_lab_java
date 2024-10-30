@@ -7,6 +7,7 @@ public enum MainMenu {
     READ_ALL,
     READ_BY_INDEX,
     UPDATE,
+    DELETE,
     UNKNOWN;
     
     /**
