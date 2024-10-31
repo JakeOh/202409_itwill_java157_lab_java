@@ -31,8 +31,8 @@ public class FileMain01 {
 
     public static void main(String[] args) {
         // data/hello.txt 파일의 내용을 읽고, data/hello_copy.txt 파일로 복사.
-        String origin = "data/hello.txt";
-        String destination = "data/hello_copy.txt";
+        final String origin = "data/hello.txt";
+        final String destination = "data/hello_copy.txt";
         
         FileInputStream in = null; // 파일 읽기 통로
         FileOutputStream out = null; // 파일 쓰기 통로
