@@ -1,0 +1,57 @@
+package com.itwill.file01;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+/*
+ * 입/출력 스트림(Input/Output Stream): 프로그램이 데이터(값)을 입력받거나 출력하는 통로.
+ *   (예) System.in: (콘솔) 입력 스트림 객체.
+ *   (예) System.out: (콘솔) 출력 스트림 객체.
+ * 
+ * 프로그램 ===> OutputStream (write) ===> 출력 장치(콘솔, 모니터, 프린터, 파일, ...)
+ * 프로그램 <=== InputStream (read) <=== 입력 장치(콘솔, 키보드, 마우스, 파일, ...)
+ * 
+ * 프로그램 ===> FileOutputStream (write) ===> 파일
+ * 프로그램 <=== FileInputStream (read) <=== 파일
+ * 
+ * java.io.InputStream: 프로그램이 데이터를 읽어들이는 통로.
+ * |__ FileInputStream: 프로그램이 파일에서 데이터를 읽어들이는 통로.
+ *   (1) FileInputStream 객체 생성.
+ *   (2) FIS 객체의 read 관련 메서드 호출.
+ *   (3) FIS 객체를 닫음(close).
+ * 
+ * java.io.OutputStream: 프로그램이 데이터를 쓰는 통로.
+ * |__ FileOutputStream: 프로그램이 파일에 데이터를 쓰는 통로.
+ *   (1) FileOutputStream 객체 생성.
+ *   (2) FOS 객체의 write 관련 메서드 호출.
+ *   (3) FOS 객체를 닫음(close). 
+ */
+
+public class FileMain01 {
+
+    public static void main(String[] args) {
+        // data/hello.txt 파일의 내용을 읽고, data/hello_copy.txt 파일로 복사.
+        String origin = "data/hello.txt";
+        String destination = "data/hello_copy.txt";
+        
+        FileInputStream in = null; // 파일 읽기 통로
+        FileOutputStream out = null; // 파일 쓰기 통로
+        try {
+            in = new FileInputStream(origin); // FIS 객체 생성
+            
+            // TODO FIS read()
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close(); // FIS 닫음.
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+}
