@@ -45,10 +45,11 @@ public class FileMain01 {
                 if (read == -1) { // 파일 끝(EOF, end-of-file)에 도달했을 때
                     break; // 무한 반복문 종료.
                 }
-                System.out.println(read);
+                //System.out.println((char) read);
                 
                 out.write(read); // 1바이트를 파일에 씀.
             }
+            System.out.println("파일 복사 종료");
             
         } catch (Exception e) {
             e.printStackTrace();
