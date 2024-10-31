@@ -1,7 +1,6 @@
 package com.itwill.file01;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 /*
@@ -39,14 +38,24 @@ public class FileMain01 {
         FileOutputStream out = null; // 파일 쓰기 통로
         try {
             in = new FileInputStream(origin); // FIS 객체 생성
+            out = new FileOutputStream(destination); // FOS 객체 생성
             
-            // TODO FIS read()
+            while (true) { // 무한 반복문
+                int read = in.read(); // 파일에서 1바이트를 읽음.
+                if (read == -1) { // 파일 끝(EOF, end-of-file)에 도달했을 때
+                    break; // 무한 반복문 종료.
+                }
+                System.out.println(read);
+                
+                out.write(read); // 1바이트를 파일에 씀.
+            }
             
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 in.close(); // FIS 닫음.
+                out.close(); // FOS 닫음.
             } catch (Exception e) {
                 e.printStackTrace();
             }
