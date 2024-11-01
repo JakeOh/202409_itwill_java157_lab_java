@@ -2,7 +2,9 @@ package com.itwill.file07;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 /*
  * IO Stream: 바이트 스트림(byte stream). 읽기/쓰기의 기본 단위는 바이트.
@@ -52,12 +54,39 @@ public class FileMain07 {
             }
             System.out.print((char) read); // 읽은 글자를 출력
         }
+        System.out.println("\n---------------------");
         
         // 가장 마지막에 생성한 리소스만 해제(close).
         br.close();
         
-        // Java 11 버전부터 문자 스트림과 인코딩 방식을 다루는 방법:
         
+        // Java 11 버전부터 문자 스트림과 인코딩 방식을 다루는 방법:
+        // 1. FileReader 객체를 생성하면서 인코딩 방식을 설정
+        FileReader fr = new FileReader(utf8File, Charset.forName("UTF-8"));
+        
+        // 2. 읽기 속도를 빠르게 하기 위해서 버퍼(메모리) 사용.
+        BufferedReader reader = new BufferedReader(fr);
+        
+//        while (true) {
+//            int read = reader.read(); // 1글자를 읽음
+//            if (read == -1) {
+//                break;
+//            }
+//            System.out.print((char) read); // 1글자를 출력
+//        }
+//        System.out.println();
+        
+        while (true) {
+            String line = reader.readLine(); // 파일에서 1줄을 읽음.
+            if (line == null) { // 파일 끝(EOF)
+                break;
+            }
+            System.out.println(line);
+//            Thread.sleep(1000);
+        }
+        
+        // 리소스 해제
+        reader.close();
     }
 
 }
