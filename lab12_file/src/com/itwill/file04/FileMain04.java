@@ -1,5 +1,10 @@
 package com.itwill.file04;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /*
  * 프로그램 ==> ObjectOutputStream ==> FileOutputStream ==> 파일
  * - OOS.writeObject(): 자바 객체를 파일에 쓸 수 있는 형태로 변환(직렬화, serialization).
@@ -29,7 +34,40 @@ package com.itwill.file04;
 public class FileMain04 {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        final String fileName = "data/product.dat";
+        
+        // Product 타입 객체를 파일에 쓰기(write. 직렬화, serialization):
+        try (// 리소스 생성
+                FileOutputStream out = new FileOutputStream(fileName);
+                ObjectOutputStream oos = new ObjectOutputStream(out);
+        ) {
+            // 파일에 쓸 Product 타입의 객체를 생성:
+            Product p = new Product(1, "스마트폰", 100_000);
+            
+            // 자바 객체를 직렬화해서 파일에 씀.
+            oos.writeObject(p);
+            
+            oos.writeObject(new Product(2, "장난감", 1_000));
+            
+            System.out.println("파일 작성 성공");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        // 작성된 파일에서 데이터를 읽고 자바 객체로 변환(역직렬화, de-serialization):
+        try ( // 리소스 생성
+                FileInputStream in = new FileInputStream(fileName);
+                ObjectInputStream ois = new ObjectInputStream(in);
+        ) {
+            Product p1 = (Product) ois.readObject();
+            System.out.println(p1);
+            
+            Product p2 = (Product) ois.readObject();
+            System.out.println(p2);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
