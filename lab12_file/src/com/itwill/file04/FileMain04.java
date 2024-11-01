@@ -1,5 +1,6 @@
 package com.itwill.file04;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -59,12 +60,20 @@ public class FileMain04 {
                 FileInputStream in = new FileInputStream(fileName);
                 ObjectInputStream ois = new ObjectInputStream(in);
         ) {
-            Product p1 = (Product) ois.readObject();
-            System.out.println(p1);
+//            Product p1 = (Product) ois.readObject();
+//            System.out.println(p1);
+//            
+//            Product p2 = (Product) ois.readObject();
+//            System.out.println(p2);
             
-            Product p2 = (Product) ois.readObject();
-            System.out.println(p2);
+            while (true) {
+                Product p = (Product) ois.readObject();
+                //-> OIS.readObject() 메서드는 파일 끝에서 EOFException을 던짐.
+                System.out.println(p);
+            }
             
+        } catch (EOFException e) {
+            System.out.println("--- 파일 끝 ---");
         } catch (Exception e) {
             e.printStackTrace();
         }
