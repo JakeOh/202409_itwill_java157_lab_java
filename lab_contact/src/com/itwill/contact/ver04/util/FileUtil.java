@@ -1,6 +1,12 @@
 package com.itwill.contact.ver04.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 import com.itwill.contact.ver04.model.Contact;
@@ -23,9 +29,18 @@ public class FileUtil {
         List<Contact> list = null;
         
         File file = new File(DATA_DIR, DATA_FILE);
-        // TODO
+        try ( // 리소스 생성
+                FileInputStream in = new FileInputStream(file);
+                BufferedInputStream bis = new BufferedInputStream(in);
+                ObjectInputStream ois = new ObjectInputStream(bis);
+        ) {
+            list = (List<Contact>) ois.readObject();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
-        return null;
+        return list;
     }
     
     /**
@@ -35,7 +50,40 @@ public class FileUtil {
      */
     public static void writeDataToFile(List<Contact> list) {
         File file = new File(DATA_DIR, DATA_FILE);
-        // TODO
+        try ( // 리소스 생성
+                FileOutputStream out = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(out);
+                ObjectOutputStream oos = new ObjectOutputStream(bos);
+        ) {
+            oos.writeObject(list);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * 연락처 데이터 파일을 저장하는 폴더가 만들어져 있지 않으면 폴더를 새로 생성하고 
+     * File 타입의 객체를 리턴,
+     * 데이터 폴더가 이미 존재하면, 그 폴더의 File 객체를 리턴.
+     * 
+     * @return File 타입 객체 리턴. 폴더 생성 실패인 경우에는 null.
+     */
+    public static File initializeDataDir() {
+        File dir = new File(DATA_DIR);
+        if (dir.exists()) {
+            System.out.println("데이터 폴더가 이미 있습니다.");
+        } else {
+            boolean result = dir.mkdir();
+            if (result) {
+                System.out.println("데이터 폴더를 새로 만듭니다.");
+            } else {
+                System.out.println("데이터 폴더 생성 실패!!!");
+                dir = null;
+            }
+        }
+        
+        return dir;
     }
     
 }
