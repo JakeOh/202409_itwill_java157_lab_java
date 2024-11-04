@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.itwill.contact.ver04.model.Contact;
@@ -84,6 +85,23 @@ public class FileUtil {
         }
         
         return dir;
+    }
+    
+    /**
+     * 연락처 파일(data\contacts.dat)이 있으면, 파일의 내용을 읽어서 리턴.
+     * 연락처 데이터 파일이 없으면, 빈 리스트(원소가 없는 리스트)를 리턴.
+     *  
+     * @return List<Contact>.
+     */
+    public static List<Contact> initializeData() {
+        List<Contact> list = new ArrayList<>();
+        
+        File file = new File(DATA_DIR, DATA_FILE);
+        if (file.exists()) {
+            list = readDataFromFile();
+        }
+        
+        return list;
     }
     
 }
