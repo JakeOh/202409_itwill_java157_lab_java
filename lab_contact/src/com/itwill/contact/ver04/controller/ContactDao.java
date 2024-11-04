@@ -37,4 +37,77 @@ public enum ContactDao {
         return 1;
     }
     
+    /**
+     * 연락처 목록 검색.
+     * 
+     * @return 연락처(들)의 리스트(List<Contact>).
+     */
+    public List<Contact> read() {
+        return contacts;
+    }
+    
+    /**
+     * 특정 인덱스 위치에 있는 연락처 정보를 리턴.
+     * 
+     * @param index - 리스트에서 연락처를 찾기 위한 인덱스. 0 이상의 정수.
+     * @return index가 리스트의 인덱스 범위 안에 있으면(0 <= index < size()) 
+     * 리스트에서 해당 index 위치의 연락처 객체, 그렇지 않으면 null.
+     */
+    public Contact read(int index) {
+        if (isValidIndex(index)) {
+            return contacts.get(index);
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * 아규먼트 index가 연락처 리스트의 인덱스 범위 안에 있는 지 여부를 리턴.
+     * @param index - 연락처 리스트의 유효한 인덱스인 지를 검사하기 위한 정수.
+     * @return (0 <= index < size())이면 true, 그렇지 않으면 false.
+     */
+    public boolean isValidIndex(int index) {
+        return (index >= 0) && (index < contacts.size());
+    }
+    
+    /**
+     * 해당 인덱스 위치의 연락처를 새로운 정보로 업데이트. 업데이트한 리스트를 파일에 씀.
+     * @param index - 업데이트할 연락처의 인덱스.
+     * @param contact - 업데이트할 연락처의 새로운 정보(이름, 전화번호, 이메일).
+     * @return 성공하면 1, 실패하면 0.
+     */
+    public int update(int index, Contact contact) {
+        if (!isValidIndex(index)) {
+            return 0;
+        }
+        
+        // 특정 index 위치의 연락처 정보를 수정.
+//        contacts.set(index, contact);
+        Contact previous = contacts.get(index);
+        previous.setName(contact.getName());
+        previous.setPhone(contact.getPhone());
+        previous.setEmail(contact.getEmail());
+        
+        writeDataToFile(contacts); // 업데이트된 리스트를 파일에 씀.
+        
+        return 1;
+    }
+    
+    /**
+     * 연락처 리스트에서 특정 위치의 연락처를 삭제. 변경된 리스트를 파일에 씀.
+     * 
+     * @param index - 삭제할 연락처의 인덱스.
+     * @return 성공하면 1, 그렇지 않으면 0.
+     */
+    public int delete(int index) {
+        if (!isValidIndex(index)) {
+            return 0;
+        }
+        
+        contacts.remove(index); // 리스트에서 특정 index 위치의 원소를 삭제.
+        writeDataToFile(contacts); // 변경된 리스트를 파일에 씀.
+        
+        return 1;
+    }
+    
 }
