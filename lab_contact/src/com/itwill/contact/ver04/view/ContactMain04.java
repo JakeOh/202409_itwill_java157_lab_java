@@ -35,6 +35,15 @@ public class ContactMain04 {
             case READ_ALL:
                 app.readAllContacts();
                 break;
+            case READ_BY_INDEX:
+                app.readContactByIndex();
+                break;
+            case UPDATE:
+                app.updateContact();
+                break;
+            case DELETE:
+                app.deleteContact();
+                break;
             default:
                 System.out.println(">>> 메뉴(0 ~ 5)를 다시 선택하세요.");
             }
@@ -44,6 +53,66 @@ public class ContactMain04 {
         System.out.println("*** 프로그램 종료 ***");
     }
     
+    private void deleteContact() {
+        System.out.println("\n--- 연락처 삭제 ---");
+        
+        System.out.print("삭제할 인덱스>> ");
+        int index = inputInteger();
+        
+        int result = dao.delete(index);
+        if (result == 1) {
+            System.out.println(">>> 연락처 삭제 성공");
+        } else {
+            System.out.println(">>> 해당 인덱스에는 삭제할 연락처 정보가 없습니다.");
+        }
+    }
+
+    private void updateContact() {
+        System.out.println("\n--- 연락처 업데이트 ---");
+        
+        System.out.print("수정할 인덱스>> ");
+        int index = inputInteger();
+        if (!dao.isValidIndex(index)) {
+            System.out.println(">>> 해당 인덱스에는 연락처 정보가 없습니다.");
+            return;
+        }
+        
+        Contact before = dao.read(index);
+        System.out.println("수정 전>>> " + before);
+        
+        System.out.print("이름>> ");
+        String name = scanner.nextLine();
+        
+        System.out.print("전화번호>> ");
+        String phone = scanner.nextLine();
+        
+        System.out.print("이메일>> ");
+        String email = scanner.nextLine();
+        
+        Contact after = new Contact(null, name, phone, email);
+        
+        int result = dao.update(index, after);
+        if (result == 1) {
+            System.out.println(">>> 연락처 업데이트 성공");
+        } else {
+            System.out.println(">>> 연락처 업데이트 실패");
+        }
+    }
+
+    private void readContactByIndex() {
+        System.out.println("\n--- 인덱스 검색 ---");
+        
+        System.out.print("인덱스>> ");
+        int index = inputInteger();
+        
+        Contact contact = dao.read(index);
+        if (contact != null) {
+            System.out.println(contact);
+        } else {
+            System.out.println(">>> 해당 인덱스에는 연락처 정보가 없습니다.");
+        }
+    }
+
     private void readAllContacts() {
         System.out.println("\n--- 연락처 목록 ---");
         
