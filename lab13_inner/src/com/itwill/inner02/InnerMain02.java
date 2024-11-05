@@ -14,6 +14,12 @@ public class InnerMain02 {
                 .publisher("21세기북스")
                 .build();
         System.out.println(book2);
+        
+        Book book3 = new Book(null, "한강", null);
+        System.out.println(book3);
+        
+        Book book4 = Book.builder().author("한강").build();
+        System.out.println(book4);
 
     }
 
