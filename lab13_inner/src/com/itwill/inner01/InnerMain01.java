@@ -41,9 +41,19 @@ public class InnerMain01 {
         System.out.println(outer1.toString());
         
         // Outer.Inner 타입의 변수를 선언, 객체 생성 초기화.
-        Outer.Inner inner1 = outer1.new Inner();
+        Outer.Inner inner1 = outer1.new Inner(100);
         System.out.println(inner1);
+        inner1.info();
         
+        Outer.Inner inner2 = outer1.new Inner(123);
+        inner2.info();
+        
+        outer1.setX(0);
+        inner1.info();
+        inner2.info();
+        
+        Outer.Inner inner3 = new Outer(0, 0, "hello").new Inner(1);
+        inner3.info();
     }
 
 }
