@@ -9,7 +9,17 @@ interface MyFilter {
     boolean test(Object x);
 }
 
+@FunctionalInterface
+interface MyMapper {
+    Object map(Object x);
+}
+
 public class LambdaMain02 {
+    
+    public List<Object> map(List<Object> list, MyMapper mapper) {
+        // TODO
+        return null;
+    }
     
     public List<Object> filter(List<Object> list, MyFilter filter) {
         List<Object> result = new ArrayList<>();
@@ -42,7 +52,30 @@ public class LambdaMain02 {
         // numbers의 원소들 중에서 짝수들만 저장하는 리스트를 만들자.
         List<Object> evens = app.filter(numbers, (x) -> (Integer) x % 2 == 0);
         System.out.println(evens);
+        
+        // 문자열을 원소로 갖는 리스트
+        List<Object> names = Arrays.asList("Java", "SQL", "JavaScript", "HTML", "Python");
+        System.out.println(names);
+        
+        // names에서 5글자 이상인 문자열들만 필터링한 리스트.
+//        List<Object> longNames = app.filter(names, new MyFilter() {
+//            @Override
+//            public boolean test(Object x) {
+//                return ((String) x).length() >= 5;
+//            }
+//        });
+        List<Object> longNames = app.filter(names, (x) -> ((String) x).length() >= 5);
+        System.out.println(longNames);
+        
+        // names에서 "L"이 들어간 문자열들만 필터링한 리스트.
+        List<Object> result = app.filter(names, (x) -> ((String) x).contains("L"));
+        System.out.println(result);
 
+        // 리스트 numbers의 원소들의 제곱을 저장하는 리스트를 만들자.
+        // -> 결과: [1, 4, 9, 100, 400, 900, 121, 144, 169]
+        List<Object> squares = app.map(numbers, (x) -> ((Integer) x) * ((Integer) x));
+        System.out.println(squares);
+        
     }
 
 }
