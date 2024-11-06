@@ -12,6 +12,8 @@ import com.itwill.lambda01.Calculator.Calculable;
  * - 파라미터 선언에서 변수 타입은 생략 가능. (예) (x, y) -> { return x / y; }
  * - 람다 표현식 몸통에 한 문장만 있는 경우, {}와 세미콜로(;)을 생략.
  * - 람다 표현식 몸통이 return 문장만 있는 경우에는 리턴 값만 남김. (예) (x, y) -> x / y
+ * - 람다 표현식의 파라미터가 1개인 경우, ()를 생략 가능. (예) x -> 2 * x
+ * - 람다 표현식에서 파라미터가 없는 경우에는 ()는 생략 불가! (예) () -> "Hello"
  */
 
 public class LambdaMain01 {
