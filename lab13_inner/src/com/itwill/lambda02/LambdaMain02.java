@@ -17,8 +17,12 @@ interface MyMapper {
 public class LambdaMain02 {
     
     public List<Object> map(List<Object> list, MyMapper mapper) {
-        // TODO
-        return null;
+        List<Object> result = new ArrayList<>();
+        for (Object x : list) {
+            result.add(mapper.map(x));
+        }
+        
+        return result;
     }
     
     public List<Object> filter(List<Object> list, MyFilter filter) {
@@ -74,7 +78,24 @@ public class LambdaMain02 {
         // 리스트 numbers의 원소들의 제곱을 저장하는 리스트를 만들자.
         // -> 결과: [1, 4, 9, 100, 400, 900, 121, 144, 169]
         List<Object> squares = app.map(numbers, (x) -> ((Integer) x) * ((Integer) x));
+//        List<Object> squares = app.map(numbers, new MyMapper() {
+//            @Override
+//            public Object map(Object x) {
+//                return (Integer) x * (Integer) x;
+//            }
+//        });
         System.out.println(squares);
+        
+        // 리스트 names 원소(String)들의 길이를 저장하는 리스트를 만들자.
+        // -> 결과: [4, 3, 10, 4, 6]
+//        List<Object> lengths = app.map(names, new MyMapper() {
+//            @Override
+//            public Object map(Object x) {
+//                return ((String) x).length();
+//            }
+//        });
+        List<Object> lengths = app.map(names, (x) -> ((String) x).length());
+        System.out.println(lengths);
         
     }
 
