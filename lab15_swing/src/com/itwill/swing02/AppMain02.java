@@ -64,18 +64,32 @@ public class AppMain02 {
         textField.setColumns(10);
         
         btnInput = new JButton("저장");
+        
+        // 버튼의 이벤트 리스너(핸들러)를 설정(등록) - 버튼 (클릭) 기능을 작성.
         btnInput.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 버튼이 할 일을 작성
-                // textField에 입력된 내용 읽기 -> lblTitle에 입력된 내용 쓰기 -> textField 지움.
-                String text = textField.getText();
-                lblTitle.setText(text);
-                textField.setText("");
+                // 내부 클래스는 바깥 클래스의 멤버(필드, 메서드)를 사용할 수 있음.
+                handleBtnInputClick();
             }
         });
+//        btnInput.addActionListener(e -> handleBtnInputClick());
+        
         btnInput.setFont(new Font("D2Coding", Font.BOLD, 26));
         btnInput.setBounds(12, 206, 760, 88);
         frame.getContentPane().add(btnInput);
     }
+    
+    // btnInput 버튼을 클릭했을 때 할 일(기능)을 작성:
+    private void handleBtnInputClick() {
+        // 1. textField에 입력된 내용을 읽어 옴.
+        String text = textField.getText();
+        
+        // 2. 입력 내용을 lblTitle에 씀.
+        lblTitle.setText(text);
+        
+        // 3. textField에 입력된 내용을 지움.
+        textField.setText("");
+    }
+    
 }
