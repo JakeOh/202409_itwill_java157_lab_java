@@ -58,10 +58,89 @@ public class LambdaMain04 {
         
         // Ex4. 직급이 부장인 직원들의 급여 합계.
         // Ex5. 직급이 부장인 직원들의 급여 평균.
-        // Ex6. 급여가 1,000 이상인 직원들의 정보를 한 줄에 한 명씩 출력.
-        // Ex7. 개발1팀 직원들의 급여를 10% 인상하면 인상된 급여의 평균?
-        // Ex8. 직원들 중 대리는 몇 명?
+        System.out.println("Ex.4, Ex.5 -----");
+        count = 0; // 부장 직원 수
+        sum = 0; // 부장 급여 합계
+        for (Employee e : employees) {
+            if (e.getJobTitle().equals("부장")) {
+                count++;
+                sum += e.getSalary();
+            }
+        }
+        mean = sum / count; // 부장 급여 평균
+        System.out.println("부장 급여 합계 = " + sum);
+        System.out.println("부장 급여 평균 = " + mean);
         
+        // Stream & Lambda
+        sum = employees.stream()
+                .filter(e -> e.getJobTitle().equals("부장"))
+                .mapToDouble(e -> e.getSalary())
+                .sum();
+        System.out.println("sum = " + sum);
+        
+        mean = employees.stream()
+                .filter(e -> e.getJobTitle().equals("부장"))
+                .mapToDouble(e -> e.getSalary())
+                .average()
+                .orElseThrow();
+        System.out.println("mean = " + mean);
+        
+        // Ex6. 급여가 1,000 이상인 직원들의 정보를 한 줄에 한 명씩 출력.
+        System.out.println("Ex.6 -----");
+        for (Employee e : employees) {
+            if (e.getSalary() >= 1_000) {
+                System.out.println(e);
+            }
+        }
+        
+        // Stream & Lambda
+        employees.stream()
+                .filter(e -> e.getSalary() >= 1_000)
+                .forEach(System.out::println); // e -> System.out.println(e)
+        
+        // Ex7. 개발1팀 직원들의 급여를 10% 인상하면 인상된 급여의 평균?
+        System.out.println("Ex.7 -----");
+        sum = 0;
+        count = 0;
+        for (Employee e : employees) {
+            if (e.getDept().equals("개발1팀")) {
+                count++;
+                sum += e.getSalary() * 1.1;
+            }
+        }
+        mean = sum / count;
+        System.out.println("개발1팀 급여 합계 = " + sum);
+        System.out.println("개발1팀 급여 평균 = " + mean);
+        
+        // Stream & Lambda
+        sum = employees.stream()
+                .filter(e -> e.getDept().equals("개발1팀"))
+                .mapToDouble(e -> e.getSalary() * 1.1)
+                .sum();
+        System.out.println("sum = " + sum);
+        
+        mean = employees.stream()
+                .filter(e -> e.getDept().equals("개발1팀"))
+                .mapToDouble(e -> e.getSalary() * 1.1)
+                .average()
+                .orElseThrow();
+        System.out.println("mean = " + mean);
+        
+        // Ex8. 직원들 중 대리는 몇 명?
+        System.out.println("Ex.8 -----");
+        count = 0;
+        for (Employee e : employees) {
+            if (e.getJobTitle().equals("대리")) {
+                count++;
+            }
+        }
+        System.out.println("대리 수 = " + count);
+        
+        // Stream & Lambda
+        long empCount = employees.stream()
+                .filter(e -> e.getJobTitle().equals("대리"))
+                .count();
+        System.out.println("empCount = " + empCount);
     }
 
 }
