@@ -20,10 +20,42 @@ public class LambdaMain04 {
                 new Employee(103, "허유진", "개발1팀", "과장", 500)
         );
 
-        // TODO
         // Ex1. 모든 직원들의 정보를 한 줄에 한 명씩 출력.
+        System.out.println("Ex.1 -----");
+//        for (Employee e : employees) {
+//            System.out.println(e);
+//        }
+        employees.forEach(System.out::println); // e -> System.out.println(e)
+        
         // Ex2. 개발(1, 2)팀에서 일하는 직원들의 급여 합계.
         // Ex3. 개발팀에서 일하는 직원들의 급여 평균.
+        System.out.println("Ex.2, Ex.3 -----");
+        int count = 0; // 개발(1, 2)팀에서 일하는 직원 수
+        double sum = 0; // 급여 합계
+        for (Employee e : employees) {
+            if (e.getDept().contains("개발")) {
+                count++;
+                sum += e.getSalary();
+            }
+        }
+        System.out.println("급여 합계 = " + sum);
+        double mean = sum / count;
+        System.out.println("급여 평균 = " + mean);
+        
+        // Stream & Lambda
+        sum = employees.stream()
+                .filter(e -> e.getDept().contains("개발"))
+                .mapToDouble(e -> e.getSalary())
+                .sum();
+        System.out.println("sum = " + sum);
+        
+        mean = employees.stream()
+                .filter(e -> e.getDept().equals("개발1팀") || e.getDept().equals("개발2팀"))
+                .mapToDouble(e -> e.getSalary())
+                .average() //-> 리턴 타입: OptionalDouble - 정상 값 또는 예외를 저장하는 객체.
+                .orElseThrow();
+        System.out.println("mean = " + mean);
+        
         // Ex4. 직급이 부장인 직원들의 급여 합계.
         // Ex5. 직급이 부장인 직원들의 급여 평균.
         // Ex6. 급여가 1,000 이상인 직원들의 정보를 한 줄에 한 명씩 출력.
