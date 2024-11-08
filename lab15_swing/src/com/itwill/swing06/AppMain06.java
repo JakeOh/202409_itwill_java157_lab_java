@@ -103,21 +103,36 @@ public class AppMain06 {
         frame.getContentPane().add(rbPublic);
         
         cbAbstract = new JCheckBox("abstract");
+        cbAbstract.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleCheckBoxClick(e);
+            }
+        });
         cbAbstract.setFont(new Font("D2Coding", Font.PLAIN, 24));
         cbAbstract.setBounds(8, 68, 140, 60);
         frame.getContentPane().add(cbAbstract);
         
         cbFinal = new JCheckBox("final");
+        cbFinal.addActionListener(e -> handleCheckBoxClick(e));
         cbFinal.setFont(new Font("D2Coding", Font.PLAIN, 24));
         cbFinal.setBounds(152, 68, 140, 60);
         frame.getContentPane().add(cbFinal);
         
         cbStatic = new JCheckBox("static");
+        cbStatic.addActionListener(this::handleCheckBoxClick);
         cbStatic.setFont(new Font("D2Coding", Font.PLAIN, 24));
         cbStatic.setBounds(296, 68, 140, 60);
         frame.getContentPane().add(cbStatic);
         
         comboBox = new JComboBox<>();
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleComboBoxChange(e);
+            }
+        });
+        
         comboBox.setFont(new Font("D2Coding", Font.PLAIN, 24));
         
         final String[] items = { "naver.com", "kakao.com", "gmail.com", "yahoo.com" };
@@ -128,6 +143,12 @@ public class AppMain06 {
         frame.getContentPane().add(comboBox);
         
         btnInfo = new JButton("확인");
+        btnInfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleInfoButtonClick();
+            }
+        });
         btnInfo.setFont(new Font("D2Coding", Font.PLAIN, 24));
         btnInfo.setBounds(296, 134, 284, 60);
         frame.getContentPane().add(btnInfo);
@@ -139,6 +160,55 @@ public class AppMain06 {
         textArea = new JTextArea();
         textArea.setFont(new Font("D2Coding", Font.PLAIN, 24));
         scrollPane.setViewportView(textArea);
+    }
+    
+    private void handleInfoButtonClick() {
+        // JTextArea에 출력할 문자열들을 붙여 나갈 버퍼
+        StringBuffer buf = new StringBuffer();
+        
+        // 어떤 라디오버튼이 선택됐는 지 체크
+        if (rbPrivate.isSelected()) {
+            buf.append(rbPrivate.getText());
+        } else if (rbPackage.isSelected()) {
+            buf.append(rbPackage.getText());
+        } else if (rbProtected.isSelected()) {
+            buf.append(rbProtected.getText());
+        } else {
+            buf.append(rbPublic.getText());
+        }
+        buf.append(" 라디오 버튼 선택됨.\n");
+        
+        // 어떤 체크박스들이 선택됐는 지 체크.
+        if (cbAbstract.isSelected()) {
+            buf.append(cbAbstract.getText()).append(" ");
+        }
+        if (cbFinal.isSelected()) {
+            buf.append(cbFinal.getText()).append(" ");
+        }
+        if (cbStatic.isSelected()) {
+            buf.append(cbStatic.getText()).append(" ");
+        }
+        buf.append("체크박스가 선택됨.\n");
+        
+        Object item = comboBox.getSelectedItem();
+        buf.append(item).append(" 콤보박스 아이템 선택됨.");
+        
+        textArea.setText(buf.toString());
+    }
+    
+    private void handleComboBoxChange(ActionEvent e) {
+        // 콤보박스에서 선택된 아이템 찾기:
+        int index = comboBox.getSelectedIndex();
+        Object item = comboBox.getSelectedItem();
+        textArea.setText("콤보박스 인덱스 = " + index + ", 콤보박스 아이템 = " + item);
+    }
+    
+    private void handleCheckBoxClick(ActionEvent e) {
+        // 3개의 체크박스들 중에서 누가 선택(해제)됐는 지 확인:
+        JCheckBox cb = (JCheckBox) e.getSource();
+        String text = cb.getText();
+        boolean selected = cb.isSelected();
+        textArea.setText(text + " - " + selected);
     }
     
     private void handleRadioButtonClick(ActionEvent e) {
