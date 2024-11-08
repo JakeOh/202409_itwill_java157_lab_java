@@ -11,6 +11,8 @@ import javax.swing.JTextArea;
 import java.awt.SystemColor;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AppMain04 {
 
@@ -102,6 +104,12 @@ public class AppMain04 {
         frame.getContentPane().add(textEmail);
         
         btnInput = new JButton("입력");
+        btnInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inputContactInfo();
+            }
+        });
         btnInput.setFont(new Font("D2Coding", Font.BOLD, 24));
         btnInput.setBounds(12, 220, 460, 60);
         frame.getContentPane().add(btnInput);
@@ -111,4 +119,26 @@ public class AppMain04 {
         textArea.setBounds(12, 290, 460, 161);
         frame.getContentPane().add(textArea);
     }
+    
+    // btnInput 버튼의 이벤트 리스너가 할 일(기능)
+    private void inputContactInfo() {
+        // 텍스트 필드에 입력된 내용을 읽음.
+        String name = textName.getText();
+        String phone = textPhone.getText();
+        String email = textEmail.getText();
+        
+        StringBuffer buf = new StringBuffer();
+        buf.append("이름: ").append(name).append("\n")
+            .append("전화번호: ").append(phone).append("\n")
+            .append("이메일: ").append(email).append("\n");
+        
+        // textArea에 내용을 씀.
+        textArea.setText(buf.toString());
+        
+        // 모든 텍스트 필드의 입력 내용을 지움.
+        textName.setText("");
+        textPhone.setText("");
+        textEmail.setText("");
+    }
+    
 }
