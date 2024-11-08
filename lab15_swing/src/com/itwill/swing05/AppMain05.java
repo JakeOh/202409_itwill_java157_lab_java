@@ -132,6 +132,38 @@ public class AppMain05 {
             System.out.println(btn.getText());
         }
         
+        textResult.setText(""); // JTextArea에 이전에 입력된 문자열들을 지움.
+        
+        // JTextField 2개에 입력된 문자열을 읽어서 숫자로 변환.
+        double x = 0;
+        double y = 0;
+        try {
+            x = Double.parseDouble(textNumber1.getText());
+            y = Double.parseDouble(textNumber2.getText());
+        } catch (NumberFormatException ex) {
+            textResult.setText("Number1과 Number2는 반드시 숫자여야 합니다.");
+            return; // 메서드 종료
+        }
+        
+        // 버튼 종류에 따라서 사칙연산을 수행.
+        double result = 0; // 사칙연산 결과를 저장할 변수
+        String operator = null; // 사칙연산 종류 (문자열) 저장할 변수 
+        if (source == btnPlus) {
+            result = x + y;
+            operator = "+";
+        } else if (source == btnMinus) {
+            result = x - y;
+            operator = "-";
+        } else if (source == btnMultiply) {
+            result = x * y;
+            operator = "x";
+        } else if (source == btnDivide) {
+            result = x / y;
+            operator = "/";
+        }
+        
+        String msg = String.format("%f %s %f = %f", x, operator, y, result);
+        textResult.setText(msg);
     }
 
 }
