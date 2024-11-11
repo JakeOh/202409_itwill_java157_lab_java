@@ -126,7 +126,7 @@ public class AppMain08 {
         btnCustomDlg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO
+                MyDialog.showMyDialog(frame);
             }
         });
         
