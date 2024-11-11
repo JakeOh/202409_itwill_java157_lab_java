@@ -144,7 +144,7 @@ public class AppMain08 {
         btnCustomFrame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MyFrame.showMyFrame(frame);
+                MyFrame.showMyFrame(frame, AppMain08.this);
             }
         });
         

@@ -22,6 +22,9 @@ public class MyFrame extends JFrame {
     // JFrame의 부모 컴포넌트를 저장하기 위해서.
     private Component parentComponent; 
     
+    // AppMain08 객체의 참조값을 저장하기 위해서.
+    private AppMain08 app;
+    
     private JLabel lblTitle;
     private JTextField textField;
     private JButton btnSave;
@@ -29,11 +32,11 @@ public class MyFrame extends JFrame {
     /**
      * Launch the application.
      */
-    public static void showMyFrame(Component parentComponent) {
+    public static void showMyFrame(Component parentComponent, AppMain08 app) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    MyFrame frame = new MyFrame(parentComponent);
+                    MyFrame frame = new MyFrame(parentComponent, app);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -45,8 +48,10 @@ public class MyFrame extends JFrame {
     /**
      * Create the frame. 생성자.
      */
-    public MyFrame(Component parentComponent) {
+    public MyFrame(Component parentComponent, AppMain08 app) {
         this.parentComponent = parentComponent;
+        this.app = app;
+        
         initialize();
     }
     
@@ -90,8 +95,14 @@ public class MyFrame extends JFrame {
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO AppMain08 클래스의 saveInputMessage() 메서드 호출
+                // 텍스트 필드에 입력된 문자열을 읽음.
+                String msg = textField.getText();
                 
+                // AppMain08 클래스의 saveInputMessage() 메서드 호출 -> 입력값을 AppMain08에게 전달.
+                app.saveInputMessage(msg);
+                
+                // 현재 창 닫기
+                dispose();
             }
         });
         
