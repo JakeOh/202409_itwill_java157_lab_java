@@ -14,6 +14,8 @@ public class AppMain08 {
     private JFrame frame;
     private JButton btnMsgDlg;
     private JButton btnConfirmDlg;
+    private JButton btnInputDlg;
+    private JButton btnCustomDlg;
 
     /**
      * Launch the application.
@@ -89,6 +91,48 @@ public class AppMain08 {
         btnConfirmDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
         btnConfirmDlg.setBounds(12, 68, 380, 48);
         frame.getContentPane().add(btnConfirmDlg);
+        
+        btnInputDlg = new JButton("Input Dialog");
+        
+        btnInputDlg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 입력(Input) 다이얼로그 보여주기:
+                // String result = JOptionPane.showInputDialog("검색어");
+                
+                final String[] selectionValues = { "인*", "너튜브", "X" };
+                Object result  = JOptionPane.showInputDialog(
+                        frame, // 부모 컴포넌트
+                        "검색어 입력", // 메시지
+                        "검색", // 타이틀
+                        JOptionPane.QUESTION_MESSAGE, // 메시지 타입 
+                        null, // 아이콘
+                        selectionValues, // 선택 값들의 배열 
+                        selectionValues[1] // 초기 선택 값
+                );
+                // selectionValues가 null인 경우에는 입력 다이얼로그에 텍스트 필드가 보임.
+                // selectionValues가 배열인 경우에는 콤보박스가 보임.
+                
+                btnInputDlg.setText("input dialog result = " + result);
+            }
+        });
+        
+        btnInputDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
+        btnInputDlg.setBounds(12, 126, 380, 48);
+        frame.getContentPane().add(btnInputDlg);
+        
+        btnCustomDlg = new JButton("Custom Dialog");
+        
+        btnCustomDlg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO
+            }
+        });
+        
+        btnCustomDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
+        btnCustomDlg.setBounds(12, 184, 380, 48);
+        frame.getContentPane().add(btnCustomDlg);
     }
 
 }
