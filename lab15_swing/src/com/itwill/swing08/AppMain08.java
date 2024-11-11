@@ -16,7 +16,12 @@ public class AppMain08 {
     private JButton btnConfirmDlg;
     private JButton btnInputDlg;
     private JButton btnCustomDlg;
+    private JButton btnCustomFrame;
 
+    public void saveInputMessage(String msg) {
+        btnCustomFrame.setText(msg);
+    }
+    
     /**
      * Launch the application.
      */
@@ -133,6 +138,19 @@ public class AppMain08 {
         btnCustomDlg.setFont(new Font("D2Coding", Font.PLAIN, 24));
         btnCustomDlg.setBounds(12, 184, 380, 48);
         frame.getContentPane().add(btnCustomDlg);
+        
+        btnCustomFrame = new JButton("Custom Frame");
+        
+        btnCustomFrame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MyFrame.showMyFrame(frame);
+            }
+        });
+        
+        btnCustomFrame.setFont(new Font("D2Coding", Font.PLAIN, 24));
+        btnCustomFrame.setBounds(12, 242, 380, 48);
+        frame.getContentPane().add(btnCustomFrame);
     }
 
 }
