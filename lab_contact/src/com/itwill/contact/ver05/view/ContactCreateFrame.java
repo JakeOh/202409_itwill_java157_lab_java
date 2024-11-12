@@ -1,15 +1,19 @@
 package com.itwill.contact.ver05.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
+import java.awt.Component;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTextField;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import com.itwill.contact.ver05.controller.ContactDao;
+import com.itwill.contact.ver05.model.Contact;
 
 public class ContactCreateFrame extends JFrame {
 
@@ -26,14 +30,17 @@ public class ContactCreateFrame extends JFrame {
     private JButton btnSave;
     private JButton btnCancel;
 
+    private ContactDao dao;
+    private Component parentComponent;
+    
     /**
      * Launch the application.
      */
-    public static void showContactCreateFrame() {
+    public static void showContactCreateFrame(Component parentComponent) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ContactCreateFrame frame = new ContactCreateFrame();
+                    ContactCreateFrame frame = new ContactCreateFrame(parentComponent);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -45,14 +52,29 @@ public class ContactCreateFrame extends JFrame {
     /**
      * Create the frame.
      */
-    private ContactCreateFrame() {
+    private ContactCreateFrame(Component parentComponent) {
+        this.dao = ContactDao.INSTANCE;
+        this.parentComponent = parentComponent;
+        
         initialize();
     }
     
     private void initialize() {
         setTitle("새 연락처 추가");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        int x = 0;
+        int y = 0;
+        if (parentComponent != null) {
+            x = parentComponent.getX();
+            y = parentComponent.getY();
+        }
+        setBounds(x, y, 450, 300);
+        
+        if (parentComponent == null) {
+            setLocationRelativeTo(null); // 화면의 한가운데에 JFrame을 보여줌.
+        }
+        
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -100,11 +122,35 @@ public class ContactCreateFrame extends JFrame {
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
         
         btnSave = new JButton("저장");
+        btnSave.addActionListener(e -> createNewContact());
         btnSave.setFont(new Font("D2Coding", Font.PLAIN, 24));
         buttonPanel.add(btnSave);
         
         btnCancel = new JButton("취소");
+        btnCancel.addActionListener(e -> dispose());
         btnCancel.setFont(new Font("D2Coding", Font.PLAIN, 24));
         buttonPanel.add(btnCancel);
     }
+    
+    private void createNewContact() {
+        // JTextField에서 이름, 전화번호, 이메일을 읽음.
+        String name = textName.getText();
+        String phone = textPhone.getText();
+        String email = textEmail.getText();
+        
+        // Contact 타입 객체 생성.
+        Contact contact = new Contact(null, name, phone, email);
+        
+        // DAO 메서드를 호출해서 파일에 저장.
+        int result = dao.create(contact);
+        if (result == 1) {
+            // TODO
+            // 현재 창(연락처 추가 창)을 닫음.
+            dispose();
+        } else {
+            // TODO
+        }
+        
+    }
+    
 }

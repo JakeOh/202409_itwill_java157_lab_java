@@ -10,7 +10,12 @@ import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import com.itwill.contact.ver05.controller.ContactDao;
+import com.itwill.contact.ver05.model.Contact;
+
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ContactMain05 {
@@ -27,6 +32,8 @@ public class ContactMain05 {
     private JTable table;
     private DefaultTableModel model;
 
+    private ContactDao dao;
+    
     /**
      * Launch the application.
      */
@@ -47,7 +54,11 @@ public class ContactMain05 {
      * Create the application.
      */
     public ContactMain05() {
+        this.dao = ContactDao.INSTANCE;
+        
         initialize();
+        
+        loadContactData();
     }
 
     /**
@@ -66,7 +77,7 @@ public class ContactMain05 {
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ContactCreateFrame.showContactCreateFrame();
+                ContactCreateFrame.showContactCreateFrame(frame);
             }
         });
         btnSave.setFont(new Font("D2Coding", Font.PLAIN, 24));
@@ -95,4 +106,15 @@ public class ContactMain05 {
         scrollPane.setViewportView(table);
     }
 
+    private void loadContactData() {
+        // DAO의 메서드를 호출해서 파일에 저장된 연락처 데이터를 읽어옴.
+        List<Contact> list = dao.read();
+        
+        // 리스트의 연락처(이름, 전화번호)를 테이블 모델의 행(row)으로 추가.
+        for (Contact c : list) {
+            Object[] row = { c.getName(), c.getPhone() };
+            model.addRow(row);
+        }
+    }
+    
 }
