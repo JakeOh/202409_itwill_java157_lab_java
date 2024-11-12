@@ -53,7 +53,7 @@ public class ContactSearchFrame extends JFrame {
     /**
      * Create the frame.
      */
-    public ContactSearchFrame(Component parentComponent) {
+    private ContactSearchFrame(Component parentComponent) {
         this.dao = ContactDao.INSTANCE;
         this.parentComponent = parentComponent;
         
