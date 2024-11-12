@@ -89,6 +89,7 @@ public class ContactMain05 {
         buttonPanel.add(btnSearch);
         
         btnUpdate = new JButton("수정");
+        btnUpdate.addActionListener(e -> updateContact());
         btnUpdate.setFont(new Font("D2Coding", Font.PLAIN, 24));
         buttonPanel.add(btnUpdate);
         
@@ -106,6 +107,22 @@ public class ContactMain05 {
         table.setModel(model);
         
         scrollPane.setViewportView(table);
+    }
+    
+    private void updateContact() {
+        // 테이블에서 선택된 행의 인덱스를 찾음.
+        int index = table.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(
+                    frame, 
+                    "업데이트할 행을 먼저 선택하세요.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 선택한 연락처 인덱스를 업데이트 프레임에게 전달하면서 화면에 띄움.
+        ContactUpdateFrame.showContactUpdateFrame(frame, ContactMain05.this, index);
     }
     
     private void deleteContact() {
@@ -165,6 +182,12 @@ public class ContactMain05 {
         
         // 사용자에게 메시지 다이얼로그를 보여줌.
         JOptionPane.showMessageDialog(frame, "연락처 저장 성공!");
+    }
+    
+    // ContactUpdateFrame에서 연락처 업데이트 성공했을 때 호출할 메서드.
+    public void notifyContactUpdated() {
+        resetTable();
+        JOptionPane.showMessageDialog(frame, "연락처 업데이트 성공!");
     }
     
 }
