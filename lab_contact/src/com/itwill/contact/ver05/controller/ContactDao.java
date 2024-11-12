@@ -1,5 +1,6 @@
 package com.itwill.contact.ver05.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.itwill.contact.ver05.model.Contact;
@@ -108,6 +109,26 @@ public enum ContactDao {
         writeDataToFile(contacts); // 변경된 리스트를 파일에 씀.
         
         return 1;
+    }
+    
+    /**
+     * 연락처 검색.
+     * 
+     * @param keyword - 검색어(이름, 전화번호, 이메일의 일부).
+     * @return 검색어가 이름 또는 전화번호 또는 이메일에 포함된 연락처들의 리스트.
+     * 검색어가 포함된 연락처를 찾을 수 없으면 빈 리스트를 리턴.
+     */
+    public List<Contact> search(String keyword) {
+        List<Contact> result = new ArrayList<>();
+        for (Contact c : contacts) {
+            if (c.getName().toLowerCase().contains(keyword.toLowerCase()) || 
+                    c.getPhone().toLowerCase().contains(keyword.toLowerCase()) ||
+                    c.getEmail().toLowerCase().contains(keyword.toLowerCase())) {
+                result.add(c);
+            }
+        }
+        
+        return result;
     }
     
 }

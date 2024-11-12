@@ -85,6 +85,8 @@ public class ContactMain05 {
         buttonPanel.add(btnSave);
         
         btnSearch = new JButton("검색");
+        btnSearch.addActionListener(e ->
+                ContactSearchFrame.showContactSearchFrame(frame));
         btnSearch.setFont(new Font("D2Coding", Font.PLAIN, 24));
         buttonPanel.add(btnSearch);
         
