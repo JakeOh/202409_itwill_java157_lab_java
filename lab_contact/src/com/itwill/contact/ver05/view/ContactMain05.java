@@ -3,6 +3,7 @@ package com.itwill.contact.ver05.view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -77,7 +78,7 @@ public class ContactMain05 {
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ContactCreateFrame.showContactCreateFrame(frame);
+                ContactCreateFrame.showContactCreateFrame(frame, ContactMain05.this);
             }
         });
         btnSave.setFont(new Font("D2Coding", Font.PLAIN, 24));
@@ -92,6 +93,7 @@ public class ContactMain05 {
         buttonPanel.add(btnUpdate);
         
         btnDelete = new JButton("삭제");
+        btnDelete.addActionListener(e -> deleteContact());
         btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 24));
         buttonPanel.add(btnDelete);
         
@@ -105,6 +107,39 @@ public class ContactMain05 {
         
         scrollPane.setViewportView(table);
     }
+    
+    private void deleteContact() {
+        // 테이블에서 선택된 행의 인덱스를 찾음.
+        int index = table.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(
+                    frame, 
+                    "삭제할 행을 먼저 선택하세요.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 사용자에게 삭제할 것인 지 확인.
+        int confirm = JOptionPane.showConfirmDialog(
+                frame, 
+                "정말 삭제할까요?", 
+                "삭제 확인", 
+                JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            // DAO 메서드를 호출해서 연락처를 삭제하고, 파일에 저장.
+            int result = dao.delete(index);
+            if (result == 1) {
+                // 테이블 갱신.
+                resetTable();
+                JOptionPane.showMessageDialog(frame, "연락처 삭제 성공!");
+            } else {
+                // TODO 삭제 실패 메시지 다이얼로그
+            }
+            
+        }
+        
+    }
 
     private void loadContactData() {
         // DAO의 메서드를 호출해서 파일에 저장된 연락처 데이터를 읽어옴.
@@ -115,6 +150,21 @@ public class ContactMain05 {
             Object[] row = { c.getName(), c.getPhone() };
             model.addRow(row);
         }
+    }
+    
+    private void resetTable() {
+        model = new DefaultTableModel(null, COLUMN_NAMES);
+        loadContactData();
+        table.setModel(model);
+    }
+    
+    // ContactCreateFrame에서 새로운 연락처를 파일에 저장한 경우 호출할 메서드. 
+    public void notifyContactCreated() {
+        // 테이블을 처음부터 다시 새로 그림.
+        resetTable();
+        
+        // 사용자에게 메시지 다이얼로그를 보여줌.
+        JOptionPane.showMessageDialog(frame, "연락처 저장 성공!");
     }
     
 }

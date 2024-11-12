@@ -32,15 +32,16 @@ public class ContactCreateFrame extends JFrame {
 
     private ContactDao dao;
     private Component parentComponent;
+    private ContactMain05 mainApp;
     
     /**
      * Launch the application.
      */
-    public static void showContactCreateFrame(Component parentComponent) {
+    public static void showContactCreateFrame(Component parentComponent, ContactMain05 mainApp) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ContactCreateFrame frame = new ContactCreateFrame(parentComponent);
+                    ContactCreateFrame frame = new ContactCreateFrame(parentComponent, mainApp);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -52,9 +53,10 @@ public class ContactCreateFrame extends JFrame {
     /**
      * Create the frame.
      */
-    private ContactCreateFrame(Component parentComponent) {
+    private ContactCreateFrame(Component parentComponent, ContactMain05 mainApp) {
         this.dao = ContactDao.INSTANCE;
         this.parentComponent = parentComponent;
+        this.mainApp = mainApp;
         
         initialize();
     }
@@ -144,7 +146,9 @@ public class ContactCreateFrame extends JFrame {
         // DAO 메서드를 호출해서 파일에 저장.
         int result = dao.create(contact);
         if (result == 1) {
-            // TODO
+            // 연락처 메인 프레임에게 연락처 추가 성공을 알려줌.
+            mainApp.notifyContactCreated();
+            
             // 현재 창(연락처 추가 창)을 닫음.
             dispose();
         } else {
