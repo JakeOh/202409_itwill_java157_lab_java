@@ -77,3 +77,20 @@ select
 from emp
 order by deptno asc, sal desc;
 --> asc는 생략 가능.
+
+-- 직원 테이블에서 부서번호만 검색.
+select deptno from emp; --> 14개 행
+
+-- 중복되지 않는 결과 출력:
+select distinct deptno from emp; --> 3개 행
+select distinct deptno from emp order by deptno;
+
+-- 직원 테이블에서 중복되지 않는 job(업무)를 검색.
+select distinct job from emp; --> 5개 행
+
+-- 중복되지 않는 부서/업무를 검색.
+select distinct deptno, job from emp; --> 9개 행
+select distinct
+    deptno, job
+from emp
+order by deptno, job;
