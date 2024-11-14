@@ -115,4 +115,53 @@ order by YEAR;
 --> order by 절에서는 사용할 수 있음.
 
 -- 부서별 급여 평균을 출력. 부서별 급여 평균이 2000 이상인 부서만 선택.
+select
+    deptno, round(avg(sal), 2)
+from emp
+group by deptno
+having avg(sal) >= 2000
+order by deptno;
 
+-- mgr(매니저 사번) 컬럼이 null이 아닌 직원들 중에서
+-- 부서별 급여 평균을 부서번호 오름차순 출력.
+select 
+    deptno, round(avg(sal), 2)
+from emp
+where mgr is not null
+group by deptno
+order by deptno;
+
+-- PRESIDENT는 제외하고, 업무별 사원수를 업무 이름 순 출력.
+-- 업무별 사원수가 3명 이상인 업무만 선택.
+select
+    job, count(*)
+from emp
+where job != 'PRESIDENT'
+group by job
+having count(*) >= 3
+order by job;
+
+select 
+    job, count(*)
+from emp
+group by job
+having job != 'PRESIDENT' and count(*) >= 3
+order by job;
+
+-- 입사연도별, 부서별 사원수 출력. 1980년은 검색에서 제외.
+-- 연도별 부서별 사원수가 2명 이상인 경우만 출력.
+-- 정렬: (1) 연도, (2) 부서번호
+select
+    to_char(hiredate, 'YYYY') as "YEAR", deptno, count(*) as "COUNT"
+from emp
+where to_char(hiredate, 'YYYY') != '1980'
+group by to_char(hiredate, 'YYYY'), deptno
+having count(*) >= 2
+order by YEAR, deptno;
+
+select
+    to_char(hiredate, 'YYYY') as "YEAR", deptno, count(*) as "COUNT"
+from emp
+group by to_char(hiredate, 'YYYY'), deptno
+having to_char(hiredate, 'YYYY') != '1980' and count(*) >= 2
+order by YEAR, deptno;
