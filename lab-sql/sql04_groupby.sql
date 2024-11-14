@@ -38,3 +38,37 @@ select
     empno, ename, sal, comm,
     sal * 12 + nvl(comm, 0) as "ANNUAL_SAL"
 from emp;
+
+-- 다중 행 함수 예:
+-- count(컬럼): 컬럼에서 null이 아닌 값들의 개수를 리턴.
+select
+    count(empno), count(mgr)
+from emp;
+
+-- 테이블의 행의 개수:
+select count(*) from emp;
+
+-- 통계: 합계, 평균, 최댓값, 최솟값, 분산, 표준편차(standard deviation)
+select
+    sum(sal), round(avg(sal), 2), max(sal), min(sal),
+    round(variance(sal), 2), round(stddev(sal), 2)
+from emp;
+
+-- 단일 행 함수와 다중 행 함수는 함께 사용할 수 없음!
+-- select sal, sum(sal) from emp; --> 에러 발생
+-- select nvl(comm, 0), sum(comm) from emp; --> 에러 발생
+
+/*
+ * 그룹별 쿼리:
+ * (예) 부서별 직원수, 부서별 급여 평균, ...
+ * 
+ * select 컬럼, 그룹함수(), ...
+ * from 테이블
+ * where 조건식(1)
+ * group by 컬럼(그룹을 묶을 수 있는 변수), ...
+ * having 조건식(2)
+ * order by 컬럼(정렬 기준이 되는 변수), ...;
+ *
+ * 조건식(1): 그룹을 묶기 전에 행들을 선택할 조건식.
+ * 조건식(2): 그룹을 묶은 후에 행들을 선택할 조건식.
+ */
