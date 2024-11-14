@@ -85,4 +85,65 @@ select
 from emp e, dept d
 where e.deptno(+) = d.deptno;
 
+-- equi join: join의 조건식이 = 연산자를 사용해서 만들어진 경우.
+-- non-equi join: join의 조건식이 부등호를 사용해서 만들어진 경우.
 
+-- non-equi join에서 inner/outer join을 테스트하기 위해서.
+update emp set sal = 500 where empno = 1004;
+commit;
+
+-- 직원(emp) 테이블과 급여등급(salgrade) 테이블에서 사번, 이름, 급여, 급여등급 출력.
+-- ANSI inner join
+select 
+    e.empno, e.ename, e.sal, s.grade
+from emp e
+    join salgrade s on e.sal between s.losal and s.hisal;
+
+-- Oracle inner join
+select
+    e.empno, e.ename, e.sal, s.grade
+from emp e, salgrade s
+where e.sal between s.losal and s.hisal;
+
+-- ANSI left join
+select 
+    e.empno, e.ename, e.sal, s.grade
+from emp e
+    left join salgrade s on e.sal between s.losal and s.hisal;
+
+-- Oracle left join
+select
+    e.empno, e.ename, e.sal, s.grade
+from emp e, salgrade s
+where e.sal between s.losal(+) and s.hisal(+);
+
+-- self join: 같은 테이블에서 join하는 방법.
+-- 사번, 이름, 매니저 사번, 매니저 이름 출력.
+
+-- ANSI inner join
+select
+    e1.empno, e1.ename, e1.mgr, 
+    e2.empno as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1
+    join emp e2 on e1.mgr = e2.empno;
+
+-- Oracle inner join
+select
+    e1.empno, e1.ename, e1.mgr, 
+    e2.empno as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1, emp e2
+where e1.mgr = e2.empno;
+
+-- ANSI left outer join
+select
+    e1.empno, e1.ename, e1.mgr, 
+    e2.empno as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1
+    left join emp e2 on e1.mgr = e2.empno;
+
+-- Oracle left outer join
+select
+    e1.empno, e1.ename, e1.mgr, 
+    e2.empno as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1, emp e2
+where e1.mgr = e2.empno(+);
