@@ -38,3 +38,51 @@ select
     e.empno, e.ename, e.deptno, d.dname
 from emp e, dept d
 where e.deptno = d.deptno;
+
+-- left outer join
+-- (1) ANSI
+select
+    e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e
+    left outer join dept d on e.deptno = d.deptno;
+--> left outer join에서 outer는 생략 가능.
+
+-- (2) Oracle
+select
+    e.empno, e.ename, d.deptno, d.dname
+from emp e, dept d
+where e.deptno = d.deptno(+);
+
+-- right outer join
+-- (1) ANSI
+select
+    e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e
+    right join dept d on e.deptno = d.deptno;
+
+-- (2) Oracle
+select
+    e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e, dept d
+where e.deptno(+) = d.deptno;
+
+-- full outer join
+-- (1) ANSI
+select 
+    e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e
+    full join dept d on e.deptno = d.deptno;
+
+-- (2) Oracle: full outer join 문법이 없음.
+-- left outer join과 right outer join의 합집합으로 full outer join의 결과를 만들 수 있음.
+select 
+    e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e, dept d
+where e.deptno = d.deptno(+)
+union
+select 
+    e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e, dept d
+where e.deptno(+) = d.deptno;
+
+
