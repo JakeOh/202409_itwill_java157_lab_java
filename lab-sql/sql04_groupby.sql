@@ -71,4 +71,48 @@ from emp;
  *
  * 조건식(1): 그룹을 묶기 전에 조건을 만족하는 행들을 선택하기 위한 조건식.
  * 조건식(2): 그룹을 묶은 후에 조건을 만족하는 그룹들을 선택하기 위한 조건식.
+ *
+ * group by에 없는 컬럼은 select에서 사용할 수 없음!
  */
+
+-- 부서별 급여 평균
+select
+    deptno, round(avg(sal), 2)
+from emp
+group by deptno
+order by deptno;
+
+-- 부서별 급여 평균, 최댓값, 최솟값
+select
+    deptno, round(avg(sal), 2) as "AVG_SAL", 
+    max(sal) as "MAX_SAL", min(sal) as "MIN_SAL"
+from emp
+group by deptno
+order by deptno;
+
+-- 업무별 직원수, 급여 최댓값, 급여 최솟값, 급여 평균을 업무 오름차순 출력.
+select
+    job, count(job), max(sal), min(sal), round(avg(sal), 2)
+from emp
+group by job
+order by job;
+
+-- 부서별 업무별 부서번호, 업무, 직원수, 급여 평균을 출력.
+-- 정렬: (1) 부서번호, (2) 업무
+select
+    deptno, job, count(*), round(avg(sal), 2)
+from emp
+group by deptno, job
+order by deptno, job;
+
+-- 입사연도별 사원수를 출력. (힌트) to_char(hiredate, 'YYYY') 이용.
+select
+    to_char(hiredate, 'YYYY') as "YEAR", count(*) as "EMP_COUNT"
+from emp
+group by to_char(hiredate, 'YYYY')
+order by YEAR;
+--> select 절에서 설정한 별명(alias)는 where, group by, having 절에 사용할 수 없음.
+--> order by 절에서는 사용할 수 있음.
+
+-- 부서별 급여 평균을 출력. 부서별 급여 평균이 2000 이상인 부서만 선택.
+
