@@ -119,8 +119,64 @@ group by d.department_name
 having count(*) >= 5;
 
 -- 9. 부서번호, 부서별 급여 평균을 검색. 소숫점 한자리까지 반올림 출력.
+select
+    department_id, round(avg(salary), 1) as AVG_SALARY
+from employees
+group by department_id;
 
 -- 10. 부서별 급여 평균이 최대인 부서의 부서번호, 급여 평균을 출력.
+-- (1)
+select
+    department_id, round(avg(salary), 1) as AVG_SALARY
+from employees
+group by department_id
+having avg(salary) = (
+    select max(avg(salary))
+    from employees
+    group by department_id
+);
+
+-- (2) from 절에 사용한 sub query
+select
+    max(v.AVG_SALARY)
+from (
+    select department_id, avg(salary) as AVG_SALARY
+    from employees
+    group by department_id
+) v;
+--> from 절에서 작성한 sub query 별명은 where 절의 sub query에서 사용할 수 없기 때문에
+--> 부서 번호는 select할 수 없음.
+
+-- (3) with-as-select 구문
+with v as (
+    select department_id, avg(salary) as AVG_SALARY
+    from employees
+    group by department_id
+)
+select
+    department_id, AVG_SALARY
+from v
+where AVG_SALARY = (
+    select max(AVG_SALARY) from v
+);
+
+-- (4) top-n query
+select *
+from employees
+order by employee_id 
+    fetch first 5 rows only;
+
+select *
+from employees
+order by employee_id
+    offset 5 rows fetch first 5 rows only;
+    
+select
+    department_id, round(avg(salary), 1) as AVG_SALARY
+from employees
+group by department_id
+order by AVG_SALARY desc
+    fetch first 1 rows only;
 
 -- 11. 사번, 직원 이름, 국가 이름, 급여 출력.
 
