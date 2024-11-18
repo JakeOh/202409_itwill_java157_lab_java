@@ -146,3 +146,56 @@ values (1003, '홍길동', -1);
 select * from ex_emp1;
 
 commit;
+
+
+-- 테이블을 생성할 때 제약조건 만들기 2: 제약조건 이름 설정.
+create table ex_emp2 (
+    id      number(4, 0) 
+            constraint pk_ex_emp2_id primary key,
+    ename   varchar2(5 char) 
+            constraint nn_ex_emp2_ename not null,
+    email   varchar2(100 char) 
+            constraint uq_ex_emp2_email unique,
+    age     number(3, 0) 
+            constraint ck_ex_emp2_age check (age >= 0),
+    memo    varchar2(100 char)
+);
+
+-- 테이블을 생성할 때 제약조건 만들기 3: 컬럼 정의 따로, 제약조건 정의 따로.
+create table ex_emp3 (
+    -- 컬럼 정의(컬럼 이름, 데이터 타입, 기본값)
+    id      number(4, 0),
+    ename   varchar2(5 char),
+    email   varchar2(100 char),
+    age     number(3, 0),
+    memo    varchar2(100 char),
+    -- 제약조건 정의(제약조건 이름, 내용)
+    constraint pk_ex_emp3_id primary key (id),
+    constraint nn_ex_emp3_ename check (ename is not null),
+    constraint uq_ex_emp3_email unique (email),
+    constraint ck_ex_emp3_age check (age >= 0)
+);
+
+-- Foreign Key(FK, 외래키): 다른 테이블의 PK를 참조하는 제약조건.
+-- ex_emp4 테이블의 deptno 컬럼 - FK, ex_dept 테이블의 deptno 컬럼 - PK.
+-- PK를 갖는 테이블을 먼저 생성, 그 PK를 참조하는 FK를 갖는 테이블을 나중에 생성.
+
+-- (1) PK를 갖는 테이블 생성.
+create table ex_dept (
+    deptno  number(2, 0),
+    dname   varchar2(10 char),
+    constraint pk_ex_dept_deptno primary key (deptno),
+    constraint nn_ex_dept_dname check (dname is not null)
+);
+
+-- (2) 다른 테이블의 PK를 참조하는 FK를 갖는 테이블을 생성.
+create table ex_emp4 (
+    id      number(4, 0)
+            constraint pk_ex_emp4_id primary key,
+    ename   varchar2(5 char)
+            constraint nn_ex_emp4_ename not null,
+    deptno  number(2, 0)
+            constraint fk_ex_emp4_deptno references ex_dept (deptno)
+);
+
+
