@@ -76,7 +76,7 @@ select * from ex_students;
 
 -- 문자열 타입 varchar2 단위: char(글자수), byte(바이트)
 -- 오라클에서 문자열을 저장할 때 인코딩을 utf-8을 사용하는 경우,
--- 영문자/숫자/특수기호 - 1byte. 한글 - 3 byte.
+-- 영문자/숫자/특수기호 - 1 byte. 한글 - 3 byte.
 -- varchar2의 기본 단위는 byte! 단위를 생략하면 byte로 취급.
 -- (예) varchar2(10) = varchar2(10 byte)
 create table ex_byte (
@@ -90,5 +90,59 @@ insert into ex_byte values('길동');
 --> ORA-12899: "SCOTT"."EX_BYTE"."STUNAME" 열에 대한 값이 너무 큼(실제: 6, 최대값: 5)
 
 select * from ex_byte;
+
+commit;
+
+/*
+ * 제약조건(constraint) 종류:
+ * (1) primary key(PK, 고유키): 테이블에서 유일한 행 1개를 검색할 수 있는 컬럼(들).
+ *     - PK인 컬럼은 null 값을 가질 수 없고, 중복되는 값을 가질 수 없음.
+ * (2) not null(NN): 반드시 값을 가져야 하는 컬럼. null 값을 가질 수 없는 컬럼.
+ * (3) unique: 중복된 값을 가질 수 없는 컬럼. null은 가질 수 있음.
+ * (4) check: 컬럼의 값이 조건을 만족하는 값들로만 제한.
+ * (5) foreign key(FK, 외래키): 다른 테이블의 PK를 참조하는 컬럼.
+ *     - (예) emp 테이블에서 deptno 컬럼 - FK. dept 테이블에서 deptno 컬럼 - PK.
+ */
+
+-- 테이블을 생성할 때 제약조건 만들기 1: 제약조건 이름을 설정하지 않는 경우.
+-- 오라클에서 제약조건의 이름을 자동으로 부여. (예) SYS_C001234
+create table ex_emp1 (
+    eno     number(4, 0) primary key,
+    ename   varchar2(5 char) not null,
+    email   varchar2(100 char) unique,
+    age     number(3, 0) check (age >= 0),
+    memo    varchar2(100 char)
+);
+
+insert into ex_emp1
+values (1001, '홍길동', 'hgd@itwill.com', 20, '안녕하세요');
+
+insert into ex_emp1 (eno, ename)
+values (1001, '홍길동');
+--> ORA-00001: 무결성 제약 조건(SCOTT.SYS_C008351)에 위배됩니다
+--> PK 제약조건을 위배 - 중복된 값은 insert될 수 없음.
+
+-- 제약조건을 설정하는 이유: 데이터의 무결성을 유지하기 위해서.
+
+insert into ex_emp1 (eno, ename)
+values (null, '홍길동');
+--> ORA-01400: NULL을 ("SCOTT"."EX_EMP1"."ENO") 안에 삽입할 수 없습니다
+--> PK 제약조건을 위배 - null이 될 수 없음.
+
+insert into ex_emp1 (eno) values (2001);
+--> ORA-01400: NULL을 ("SCOTT"."EX_EMP1"."ENAME") 안에 삽입할 수 없습니다
+--> NN 제약조건을 위배.
+
+insert into ex_emp1 (eno, ename, email)
+values (1002, '홍길동', 'hgd@itwill.com');
+--> ORA-00001: 무결성 제약 조건(SCOTT.SYS_C008352)에 위배됩니다
+--> unique 제약조건 위배 - email 컬럼은 중복된 값을 가질 수 없음.
+
+insert into ex_emp1(eno, ename, age)
+values (1003, '홍길동', -1);
+--> ORA-02290: 체크 제약조건(SCOTT.SYS_C008350)이 위배되었습니다
+--> age 컬럼은 0 이상의 정수만 insert 가능.
+
+select * from ex_emp1;
 
 commit;
