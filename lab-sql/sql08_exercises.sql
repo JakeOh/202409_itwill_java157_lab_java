@@ -179,14 +179,156 @@ order by AVG_SALARY desc
     fetch first 1 rows only;
 
 -- 11. 사번, 직원 이름, 국가 이름, 급여 출력.
+select
+    e.employee_id,
+    e.first_name || ' ' || e.last_name as "NAME",
+    c.country_name,
+    e.salary
+from employees e
+    join departments d on e.department_id = d.department_id
+    join locations l on d.location_id = l.location_id
+    join countries c on l.country_id = c.country_id;
+
+select
+    e.employee_id,
+    e.first_name || ' ' || e.last_name as "NAME",
+    c.country_name,
+    e.salary
+from employees e, departments d, locations l, countries c
+where e.department_id = d.department_id
+    and d.location_id = l.location_id
+    and l.country_id = c.country_id;
 
 -- 12. 국가이름, 국가별 급여 합계 출력.
+select
+    c.country_name, sum(e.salary) as "SUM_SALARY"
+from employees e
+    join departments d on e.department_id = d.department_id
+    join locations l on d.location_id = l.location_id
+    join countries c on l.country_id = c.country_id
+group by c.country_name;
+
+select
+    c.country_name, sum(e.salary) as "SUM_SALARY"
+from employees e
+    join departments d on e.department_id = d.department_id
+    join locations l on d.location_id = l.location_id
+    join countries c on l.country_id = c.country_id
+group by rollup(c.country_name);
+
+select
+    c.country_name, sum(e.salary) as "SUM_SALARY"
+from employees e, departments d, locations l, countries c
+where e.department_id = d.department_id
+    and d.location_id = l.location_id
+    and l.country_id = c.country_id
+group by c.country_name;
 
 -- 13. 사번, 직원이름, 직무 이름, 급여를 출력.
+select
+    e.employee_id,
+    e.first_name || ' ' || e.last_name as "NAME",
+    j.job_title,
+    e.salary
+from employees e
+    join jobs j on e.job_id = j.job_id;
+
+select
+    e.employee_id,
+    e.first_name || ' ' || e.last_name as "NAME",
+    j.job_title,
+    e.salary
+from employees e, jobs j 
+where e.job_id = j.job_id;
 
 -- 14. 직무 이름, 직무별 급여 평균, 최솟값, 최댓값을 출력.
+select
+    j.job_title,
+    round(avg(e.salary), 2) as "AVG_SALARY",
+    min(e.salary) as "MIN_SALARY",
+    max(e.salary) as "MAX_SALARY"
+from employees e
+    join jobs j on e.job_id = j.job_id
+group by j.job_title;
+
+select
+    j.job_title,
+    round(avg(e.salary), 2) as "AVG_SALARY",
+    min(e.salary) as "MIN_SALARY",
+    max(e.salary) as "MAX_SALARY"
+from employees e, jobs j
+where e.job_id = j.job_id
+group by j.job_title;
 
 -- 15. 국가 이름, 직무 이름, 국가별 직무별 급여 평균을 출력.
+select 
+    c.country_name, j.job_title,
+    round(avg(e.salary), 2) as "AVG_SALARY"
+from employees e
+    join jobs j on e.job_id = j.job_id
+    join departments d on e.department_id = d.department_id
+    join locations l on d.location_id = l.location_id
+    join countries c on l.country_id = c.country_id
+group by c.country_name, j.job_title;
+
+select 
+    c.country_name, j.job_title,
+    round(avg(e.salary), 2) as "AVG_SALARY"
+from employees e, jobs j, departments d, locations l, countries c
+where e.job_id = j.job_id
+    and e.department_id = d.department_id
+    and d.location_id = l.location_id
+    and l.country_id = c.country_id
+group by c.country_name, j.job_title;
 
 -- 16. 국가 이름, 직무 이름, 국가별 직무별 급여 합계을 출력.
 --     미국에서, 국가별 직무별 급여 합계가 50,000 이상인 레코드만 출력.
+select 
+    c.country_name, j.job_title,
+    sum(e.salary) as "SUM_SALARY"
+from employees e
+    join jobs j on e.job_id = j.job_id
+    join departments d on e.department_id = d.department_id
+    join locations l on d.location_id = l.location_id
+    join countries c on l.country_id = c.country_id
+group by c.country_name, j.job_title
+having c.country_name = 'United States of America'
+    and sum(e.salary) >= 50000;
+
+select 
+    c.country_name, j.job_title,
+    sum(e.salary) as "SUM_SALARY"
+from employees e
+    join jobs j on e.job_id = j.job_id
+    join departments d on e.department_id = d.department_id
+    join locations l on d.location_id = l.location_id
+    join countries c on l.country_id = c.country_id
+-- where c.country_name = 'United States of America'
+where c.country_id = 'US'
+group by c.country_name, j.job_title
+having sum(e.salary) >= 50000;
+
+select 
+    c.country_name, j.job_title,
+    sum(e.salary) as "SUM_SALARY"
+from employees e, jobs j, departments d, locations l, countries c
+-- where c.country_name = 'United States of America'
+where c.country_id = 'US'
+    and e.job_id = j.job_id
+    and e.department_id = d.department_id
+    and d.location_id = l.location_id
+    and l.country_id = c.country_id
+group by c.country_name, j.job_title
+having sum(e.salary) >= 50000;
+
+-- 국가 이름별, 업무 이름 별 급여 합계(rollup)
+select 
+    c.country_name, j.job_title,
+    sum(e.salary) as "SUM_SALARY"
+from employees e
+    join jobs j on e.job_id = j.job_id
+    join departments d on e.department_id = d.department_id
+    join locations l on d.location_id = l.location_id
+    join countries c on l.country_id = c.country_id
+group by rollup(c.country_name, j.job_title)
+order by c.country_name, j.job_title;
