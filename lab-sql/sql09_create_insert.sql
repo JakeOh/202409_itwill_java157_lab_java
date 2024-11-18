@@ -9,7 +9,7 @@
  *
  * 테이블 생성:
  * create table 테이블이름 (
- *     컬럼이름 데이터타입 [제약조건 기본값],
+ *     컬럼이름 데이터타입 [[기본값] [제약조건]],
  *     ...
  * );
  *
@@ -198,4 +198,76 @@ create table ex_emp4 (
             constraint fk_ex_emp4_deptno references ex_dept (deptno)
 );
 
+insert into ex_emp4
+values (1001, '홍길동', 10);
+--> ORA-02291: 무결성 제약조건(SCOTT.FK_EX_EMP4_DEPTNO)이 위배되었습니다- 부모 키가 없습니다
+--> ex_dept 테이블의 deptno 컬럼에 10 값이 없음.
 
+insert into ex_dept values (10, '개발팀');
+insert into ex_dept values (20, '영업팀');
+
+insert into ex_emp4 values (1001, '홍길동', 10);
+--> ex_dept 테이블에 10번 부서가 insert되어 있기 때문에 성공.
+
+insert into ex_emp4 values (2001, '홍길동', 30); --> FK 제약조건 위배
+
+select * from ex_dept;
+select * from ex_emp4;
+
+commit;
+
+-- FK 제약조건 - 컬럼 정의와 제약조건 정의를 따로 설정.
+create table ex_emp5 (
+    -- 컬럼 정의
+    id      number(4, 0),
+    ename   varchar2(5 char),
+    deptno  number(2, 0),
+    -- 제약조건 정의
+    constraint pk_ex_emp5_id primary key (id),
+    constraint nn_ex_emp5_ename check (ename is not null),
+    constraint fk_ex_emp5_deptno foreign key (deptno) 
+            references ex_dept (deptno)
+);
+
+select * from ex_dept;
+
+insert into ex_emp5 values (1, '홍길동', 20); --> 성공
+insert into ex_emp5 values (2, '홍길동', 30); --> 오류
+
+commit;
+
+
+-- 테이블을 생성할 때 컬럼의 기본값 설정하기:
+create table ex_test (
+    id      number(4, 0) primary key,
+    age     number(3, 0) 
+            constraint ck_test check (age >= 0)
+            default 0,
+    birthday    date default sysdate,
+    created     timestamp default systimestamp
+);
+
+insert into ex_test (id) values (1234);
+--> insert할 때 컬럼의 값을 삽입하지 않으면, default로 설정된 값이 insert됨.
+
+insert into ex_test values (5678, 20, '2004/01/01', '2024/11/17 16:11:50');
+--> insert할 때 컬럼의 값을 전달하면, (기본값은 무시되고) 그 값으로 insert됨.
+
+select * from ex_test;
+
+create table ex_test2 (
+    id      number(4, 0) primary key,
+    -- 컬럼이름 데이터타입 기본값(default) 제약조건(constraint)
+    age     number(3, 0) 
+            default 0
+            constraint ck_test check (age >= 0),
+    birthday    date default sysdate,
+    created     timestamp default systimestamp
+);
+
+-- 메타 테이블(meta table): 테이블(사용자 계정, 제약조건, ...)을 관리하기 위한 테이블.
+select * from user_tables;
+select table_name from user_tables; -- 접속 계정에서 생성된 테이블 이름.
+
+select * from user_constraints;
+select constraint_name, constraint_type from user_constraints;
