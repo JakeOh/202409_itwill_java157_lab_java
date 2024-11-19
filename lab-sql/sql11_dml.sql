@@ -44,9 +44,39 @@ set sal = sal * 1.1
 where hiredate > '1982/01/01';
 
 -- ACCOUNTING 부서에서 일하는 직원들의 급여를 10% 인상.
+update emp
+set sal = sal * 1.1
+where deptno = (
+    select deptno from dept where dname = 'ACCOUNTING'
+);
 
 -- salgrade가 1인 직원들의 급여를 25% 인상.
-
+update emp
+set sal = sal * 1.25
+where sal between 
+    (select losal from salgrade where grade = 1) 
+    and
+    (select hisal from salgrade where grade = 1);
 
 select * from emp;
+
+commit;
+
+
+-- delete 문장: 테이블에서 행을 삭제하는 DML.
+-- delete from table_name [where 조건식];
+-- where 절이 없는 경우에는 모든 행이 삭제됨.
+-- where 절이 있는 경우에는 조건을 만족하는 행(들)이 삭제됨.
+
+-- 사번이 1004인 직원의 레코드(행)을 삭제.
+delete from emp where empno = 1004;
+
+select * from emp;
+
+commit;
+
+delete from emp;
+rollback;
+
+-- 1987년에 입사한 직원들을 삭제.
 
