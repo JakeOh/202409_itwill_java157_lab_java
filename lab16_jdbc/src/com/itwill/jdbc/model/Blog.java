@@ -128,7 +128,9 @@ public class Blog {
         
         public BlogBuilder createdTime(Timestamp createdTime) {
             // Timestamp 타입 객체를 LocalDateTime 타입 객체로 변환해서 필드에 저장.
-            this.createdTime = createdTime.toLocalDateTime();
+            if (createdTime != null) {
+                this.createdTime = createdTime.toLocalDateTime();
+            }
             return this;
         }
 
@@ -139,7 +141,9 @@ public class Blog {
         
         public BlogBuilder modifiedTime(Timestamp modifiedTime) {
             // Timestamp -> LocalDateTime
-            this.modifiedTime = modifiedTime.toLocalDateTime();
+            if (modifiedTime != null) {
+                this.modifiedTime = modifiedTime.toLocalDateTime();
+            }
             return this;
         }
         
