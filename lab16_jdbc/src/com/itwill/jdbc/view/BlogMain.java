@@ -8,11 +8,16 @@ import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.itwill.jdbc.controller.BlogDao;
+import com.itwill.jdbc.model.Blog;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
+import java.util.List;
 
 // MVC 아키텍쳐에서 View를 담당하는 객체.
 public class BlogMain {
@@ -39,6 +44,9 @@ public class BlogMain {
     private JButton btnCreate;
     private JButton btnDetails;
     private JButton btnDelete;
+    
+    // MVC 아키텍쳐에서 Controller 객체.
+    private BlogDao blogDao;
 
     /**
      * Launch the application.
@@ -61,7 +69,9 @@ public class BlogMain {
      * Create the application.
      */
     public BlogMain() {
+        blogDao = BlogDao.INSTANCE;
         initialize();
+        initializeTable();
     }
 
     /**
@@ -123,6 +133,20 @@ public class BlogMain {
         btnDelete = new JButton("삭제");
         btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnDelete);
+    }
+    
+    private void initializeTable() {
+        // Controller(DAO)의 메서드를 호출해서 DB에 저장된 데이터를 읽어옴.
+        List<Blog> list = blogDao.read();
+        
+        model = new DefaultTableModel(null, COLUMN_NAMES);
+        for (Blog b : list) {
+            Object[] rowData = {
+                    b.getId(), b.getTitle(), b.getAuthor(), b.getCreatedTime()
+            };
+            model.addRow(rowData);
+        }
+        table.setModel(model);
     }
 
 }
