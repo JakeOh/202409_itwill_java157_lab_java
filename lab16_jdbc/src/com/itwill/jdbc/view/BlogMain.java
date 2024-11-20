@@ -7,20 +7,33 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
 
+// MVC 아키텍쳐에서 View를 담당하는 객체.
 public class BlogMain {
+    // JComboBox의 아이템 이름들을 상수로 선언.
+    private static final String[] SEARCH_TYPE = {
+            "제목", "내용", "제목+내용", "작성자"
+    };
+    
+    // JTable의 컬럼 이름들을 상수로 선언.
+    private static final String[] COLUMN_NAMES = {
+            "번호", "제목", "작성자", "작성시간"
+    };
 
     private JFrame frame;
     private JPanel searchPanel;
-    private JComboBox comboBox;
+    private JComboBox<String> comboBox;
     private JTextField textSearchKeyword;
     private JButton btnSearch;
     private JScrollPane scrollPane;
     private JTable table;
+    private DefaultTableModel model;
     private JPanel buttonPanel;
     private JButton btnReadAll;
     private JButton btnCreate;
@@ -32,6 +45,7 @@ public class BlogMain {
      */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     BlogMain window = new BlogMain();
@@ -55,20 +69,30 @@ public class BlogMain {
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
+        frame.setTitle("블로그 앱 v1.0");
+        frame.setBounds(100, 100, 800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         searchPanel = new JPanel();
         frame.getContentPane().add(searchPanel, BorderLayout.NORTH);
         
-        comboBox = new JComboBox();
+        comboBox = new JComboBox<>();
+        
+        // JComboBox의 아이템 설정.
+        final DefaultComboBoxModel<String> comboBoxModel = 
+                new DefaultComboBoxModel<String>(SEARCH_TYPE);
+        comboBox.setModel(comboBoxModel);
+        
+        comboBox.setFont(new Font("D2Coding", Font.PLAIN, 20));
         searchPanel.add(comboBox);
         
         textSearchKeyword = new JTextField();
+        textSearchKeyword.setFont(new Font("D2Coding", Font.PLAIN, 20));
         searchPanel.add(textSearchKeyword);
-        textSearchKeyword.setColumns(10);
+        textSearchKeyword.setColumns(20);
         
         btnSearch = new JButton("검색");
+        btnSearch.setFont(new Font("D2Coding", Font.PLAIN, 20));
         searchPanel.add(btnSearch);
         
         scrollPane = new JScrollPane();
@@ -76,6 +100,10 @@ public class BlogMain {
         
         table = new JTable();
         scrollPane.setViewportView(table);
+        
+        // JTable의 컬럼 이름 설정.
+        model = new DefaultTableModel(null, COLUMN_NAMES);
+        table.setModel(model);
         
         buttonPanel = new JPanel();
         frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
