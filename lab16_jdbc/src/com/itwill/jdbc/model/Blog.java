@@ -1,9 +1,21 @@
 package com.itwill.jdbc.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 // MVC 아키텍쳐에서 Model을 담당하는 객체.
 public class Blog {
+    
+    // 데이터베이스 테이블의 테이블 이름과 컬럼 이름들을 상수로 정의하는 내부 클래스.
+    public static final class Entity {
+        public static final String TBL_BLOGS = "BLOGS";
+        public static final String COL_ID = "ID";
+        public static final String COL_TITLE = "TITLE";
+        public static final String COL_CONTENT = "CONTENT";
+        public static final String COL_AUTHOR = "AUTHOR";
+        public static final String COL_CREATED_TIME = "CREATED_TIME";
+        public static final String COL_MODIFIED_TIME = "MODIFIED_TIME";
+    }
 
     private Integer id; // blogs 테이블의 PK
     private String title;
@@ -113,9 +125,21 @@ public class Blog {
             this.createdTime = createdTime;
             return this;
         }
+        
+        public BlogBuilder createdTime(Timestamp createdTime) {
+            // Timestamp 타입 객체를 LocalDateTime 타입 객체로 변환해서 필드에 저장.
+            this.createdTime = createdTime.toLocalDateTime();
+            return this;
+        }
 
         public BlogBuilder modifiedTime(LocalDateTime modifiedTime) {
             this.modifiedTime = modifiedTime;
+            return this;
+        }
+        
+        public BlogBuilder modifiedTime(Timestamp modifiedTime) {
+            // Timestamp -> LocalDateTime
+            this.modifiedTime = modifiedTime.toLocalDateTime();
             return this;
         }
         
