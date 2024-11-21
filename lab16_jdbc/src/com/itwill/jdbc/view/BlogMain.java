@@ -18,6 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Font;
 import java.util.List;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 // MVC 아키텍쳐에서 View를 담당하는 객체.
 public class BlogMain {
@@ -123,6 +125,8 @@ public class BlogMain {
         buttonPanel.add(btnReadAll);
         
         btnCreate = new JButton("새 블로그 작성");
+        btnCreate.addActionListener(e -> 
+                BlogCreateFrame.showBlogCreateFrame(frame));
         btnCreate.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnCreate);
         
