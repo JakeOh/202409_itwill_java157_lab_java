@@ -19,11 +19,10 @@ import javax.swing.table.DefaultTableModel;
 import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
 import com.itwill.jdbc.view.BlogCreateFrame.CreateNotify;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.itwill.jdbc.view.BlogDetailsFrame.UpdateNotify;
 
 // MVC 아키텍쳐에서 View를 담당하는 객체.
-public class BlogMain implements CreateNotify {
+public class BlogMain implements CreateNotify, UpdateNotify {
     
     // JComboBox의 아이템 이름들을 상수로 선언.
     private static final String[] SEARCH_TYPE = {
@@ -133,6 +132,9 @@ public class BlogMain implements CreateNotify {
         buttonPanel.add(btnCreate);
         
         btnDetails = new JButton("상세보기");
+        // TODO
+        btnDetails.addActionListener(e ->
+                BlogDetailsFrame.showBlogDetailsFrame(frame, BlogMain.this));
         btnDetails.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnDetails);
         
@@ -196,9 +198,18 @@ public class BlogMain implements CreateNotify {
     }
 
     // BlogCreateFrame.CreateNotify 인터페이스를 구현(implements)하기 위해서.
+    // 새 블로그 작성 성공했을 때(DB 테이블에 insert가 됐을 때), BlogCreateFrame이 호출할 메서드.
     @Override
     public void notifyCreateSuccess() {
-        initializeTable();
+        initializeTable(); // 테이블 새로고침.
+    }
+
+    // BlogDetailsFrame.UpdateNotify 인터페이스를 구현하기 위해서.
+    // 블로그 제목/내용 업데이트 성공했을 때, BlogDetailsFrame이 호출할 메서드.
+    @Override
+    public void notifyUpdateSuccess() {
+        // TODO Auto-generated method stub
+        
     }
 
 }

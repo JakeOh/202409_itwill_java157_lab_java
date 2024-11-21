@@ -1,6 +1,7 @@
 package com.itwill.jdbc.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -14,6 +15,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
 public class BlogDetailsFrame extends JFrame {
+    
+    public interface UpdateNotify {
+        void notifyUpdateSuccess();
+    }
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -35,15 +40,18 @@ public class BlogDetailsFrame extends JFrame {
     private JButton btnUpdate;
     private JButton btnCancel;
 
+    private Component parentComponent;
+    private UpdateNotify app;
+    
     /**
      * Launch the application.
      */
-    public static void showBlogDetailsFrame() {
+    public static void showBlogDetailsFrame(Component parentComponent, UpdateNotify app) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    BlogDetailsFrame frame = new BlogDetailsFrame();
+                    BlogDetailsFrame frame = new BlogDetailsFrame(parentComponent, app);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -53,7 +61,9 @@ public class BlogDetailsFrame extends JFrame {
     }
 
     // 생성자
-    private BlogDetailsFrame() {
+    private BlogDetailsFrame(Component parentComponent, UpdateNotify app) {
+        this.parentComponent = parentComponent;
+        this.app = app;
         initialize();
     }
     
