@@ -1,7 +1,15 @@
 package com.itwill.jdbc.controller;
 
-import static com.itwill.jdbc.model.Blog.Entity.*;
-import static com.itwill.jdbc.oracle.OracleJdbc.*;
+import static com.itwill.jdbc.model.Blog.Entity.COL_AUTHOR;
+import static com.itwill.jdbc.model.Blog.Entity.COL_CONTENT;
+import static com.itwill.jdbc.model.Blog.Entity.COL_CREATED_TIME;
+import static com.itwill.jdbc.model.Blog.Entity.COL_ID;
+import static com.itwill.jdbc.model.Blog.Entity.COL_MODIFIED_TIME;
+import static com.itwill.jdbc.model.Blog.Entity.COL_TITLE;
+import static com.itwill.jdbc.model.Blog.Entity.TBL_BLOGS;
+import static com.itwill.jdbc.oracle.OracleJdbc.PASSWORD;
+import static com.itwill.jdbc.oracle.OracleJdbc.URL;
+import static com.itwill.jdbc.oracle.OracleJdbc.USER;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -72,6 +80,7 @@ public enum BlogDao {
             "select * from %s order by %s desc", 
             TBL_BLOGS, COL_ID);
     
+    // Read(select 문장)을 실행하는 메서드.
     public List<Blog> read() {
         // DB 테이블에서 검색한 레코드들을 저장할 리스트를 생성.
         List<Blog> blogs = new ArrayList<>();
@@ -101,6 +110,42 @@ public enum BlogDao {
         }
         
         return blogs;
+    }
+    
+    // 새 블로그 작성에서 사용할 SQL 문장.
+    private static final String SQL_INSERT = String.format(
+            "insert into %s (%s, %s, %s, %s, %s) values (?, ?, ?, systimestamp, systimestamp)", 
+            TBL_BLOGS, COL_TITLE, COL_CONTENT, COL_AUTHOR, COL_CREATED_TIME, COL_MODIFIED_TIME);
+    
+    // Create(insert 문장)을 실행하는 메서드.
+    public int create(Blog blog) {
+        int result = 0;
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            // DB 서버에 접속.
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            
+            // Statement 객체 생성.
+            stmt = conn.prepareStatement(SQL_INSERT);
+            
+            // PreparedStatement의 파라미터(?)를 값으로 채움(parameter binding).
+            stmt.setString(1, blog.getTitle());
+            stmt.setString(2, blog.getContent());
+            stmt.setString(3, blog.getAuthor());
+            
+            // SQL 문장을 DB 서버에서 실행.
+            result = stmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 사용했던 리소스 해제.
+            closeResources(conn, stmt);
+        }
+        
+        return result;
     }
     
 }

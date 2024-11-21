@@ -1,25 +1,22 @@
 package com.itwill.jdbc.view;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Font;
-import java.util.List;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 // MVC 아키텍쳐에서 View를 담당하는 객체.
 public class BlogMain {

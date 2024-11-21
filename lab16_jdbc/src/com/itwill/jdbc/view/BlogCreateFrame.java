@@ -1,21 +1,22 @@
 package com.itwill.jdbc.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Component;
-
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTextField;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import com.itwill.jdbc.controller.BlogDao;
+import com.itwill.jdbc.model.Blog;
 
 public class BlogCreateFrame extends JFrame {
 
@@ -33,6 +34,7 @@ public class BlogCreateFrame extends JFrame {
     private JButton btnSave;
     private JButton btnCancel;
     
+    private BlogDao blogDao;
     private Component parentComponent;
 
     /**
@@ -54,6 +56,7 @@ public class BlogCreateFrame extends JFrame {
 
     // 생성자
     private BlogCreateFrame(Component parentComponent) {
+        this.blogDao = BlogDao.INSTANCE;
         this.parentComponent = parentComponent;
         initialize();
     }
@@ -123,6 +126,7 @@ public class BlogCreateFrame extends JFrame {
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
         
         btnSave = new JButton("저장");
+        btnSave.addActionListener(e -> createNewBlog());
         btnSave.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnSave);
         
@@ -131,4 +135,30 @@ public class BlogCreateFrame extends JFrame {
         btnCancel.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnCancel);
     }
+    
+    private void createNewBlog() {
+        // 제목, 내용, 작성자에 입력된 문자열을 읽고, DAO의 메서드를 호출해서 DB에 insert.
+        String title = textTitle.getText();
+        String content = textContent.getText();
+        String author = textAuthor.getText();
+        
+        // TODO: 제목, 내용, 작성자가 비어 있으면 사용자에게 경고 메시지를 주고 메서드를 종료.
+        
+        // Blog 객체 생성
+        Blog blog = Blog.builder().title(title).content(content).author(author).build(); 
+        
+        // DAO의 메서드 호출.
+        int result = blogDao.create(blog);
+        if (result == 1) { // 1개 행이 삽입됨.
+            JOptionPane.showMessageDialog(BlogCreateFrame.this, "새 블로그 작성 성공");
+            
+            // TODO: 메인 창(BlogMain)에게 insert 성공했다고 알려줌.
+            
+            dispose(); // 창 닫기.
+        } else { // insert 실패.
+            JOptionPane.showMessageDialog(BlogCreateFrame.this, "새 블로그 작성 실패");
+        }
+        
+    }
+    
 }
