@@ -161,8 +161,17 @@ public class BlogMain implements CreateNotify {
                 "삭제 확인", 
                 JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
-            // TODO: JTable에서 선택된 행의 첫번째 컬럼(번호 - 블로그 아이디) 값을 읽고,
+            // JTable에서 선택된 행의 첫번째 컬럼(번호 - 블로그 아이디) 값을 읽고,
+            Integer id = (Integer) model.getValueAt(index, 0);
+            
             // DAO 메서드를 호출해서, DB 테이블에서 행을 삭제.
+            int result = blogDao.delete(id);
+            if (result == 1) { // 1개 행이 삭제됨.
+                initializeTable(); // JTable을 새로고침.
+                JOptionPane.showMessageDialog(frame, "삭제 성공");
+            } else { // 삭제 실패.
+                JOptionPane.showMessageDialog(frame, "삭제 실패");
+            }
         }
         
     }

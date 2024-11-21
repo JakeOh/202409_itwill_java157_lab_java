@@ -148,4 +148,63 @@ public enum BlogDao {
         return result;
     }
     
+    // 블로그 아이디(PK)로 행 1개를 삭제하는 SQL.
+    private static final String SQL_DELETE_BY_ID = String.format(
+            "delete from %s where %s = ?", 
+            TBL_BLOGS, COL_ID);
+    
+    // Delete를 실행하는 메서드.
+    public int delete(Integer id) {
+        int result = 0;
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            // DB 접속.
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            
+            // Statement 생성.
+            stmt = conn.prepareStatement(SQL_DELETE_BY_ID);
+            
+            // PreparedStatement parameter binding
+            stmt.setInt(1, id);
+            
+            // SQL 실행
+            result = stmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt);
+        }
+        
+        return result;
+    }
+    
+    // 블로그 아이디(PK)로 행 1개를 검색하는 SQL.
+    // select * from blogs where id = ?
+    private static final String SQL_SELECT_BY_ID = String.format(
+            "select * from %s where %s = ?", 
+            TBL_BLOGS, COL_ID);
+    
+    // PK로 검색하는 메서드.
+    public Blog read(Integer id) {
+        Blog blog = null;
+        
+        // TODO
+        
+        return blog;
+    }
+    
+    // 해당 블로그 아이디의 제목, 내용, 수정시간을 업데이튼 하는 SQL.
+    // update blogs set title = ?, content = ?, modified_time = systimestamp where id = ?
+    // private int update(String title, String content, Integer id) {}
+    private int update(Blog blog) {
+        int result = 0;
+        
+        // TODO
+        
+        return result;
+    }
+    
 }
