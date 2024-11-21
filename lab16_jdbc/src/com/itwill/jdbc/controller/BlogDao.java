@@ -191,18 +191,56 @@ public enum BlogDao {
     public Blog read(Integer id) {
         Blog blog = null;
         
-        // TODO
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            
+            stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
+            stmt.setInt(1, id);
+            
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                blog = getBlogFromResultSet(rs);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt, rs);
+        }
         
         return blog;
     }
     
     // 해당 블로그 아이디의 제목, 내용, 수정시간을 업데이튼 하는 SQL.
     // update blogs set title = ?, content = ?, modified_time = systimestamp where id = ?
+    private static final String SQL_UPDATE_BY_ID = String.format(
+            "update %s set %s = ?, %s = ?, %s = systimestamp where %s = ?", 
+            TBL_BLOGS, COL_TITLE, COL_CONTENT, COL_MODIFIED_TIME, COL_ID);
+    
     // private int update(String title, String content, Integer id) {}
     private int update(Blog blog) {
         int result = 0;
         
-        // TODO
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            
+            stmt = conn.prepareStatement(SQL_UPDATE_BY_ID);
+            stmt.setString(1, blog.getTitle());
+            stmt.setString(2, blog.getContent());
+            stmt.setInt(3, blog.getId());
+            
+            result = stmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt);
+        }
         
         return result;
     }
