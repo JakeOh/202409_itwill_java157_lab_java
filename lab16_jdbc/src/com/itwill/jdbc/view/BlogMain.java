@@ -9,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,9 +18,13 @@ import javax.swing.table.DefaultTableModel;
 
 import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
+import com.itwill.jdbc.view.BlogCreateFrame.CreateNotify;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 // MVC 아키텍쳐에서 View를 담당하는 객체.
-public class BlogMain {
+public class BlogMain implements CreateNotify {
+    
     // JComboBox의 아이템 이름들을 상수로 선언.
     private static final String[] SEARCH_TYPE = {
             "제목", "내용", "제목+내용", "작성자"
@@ -123,7 +128,7 @@ public class BlogMain {
         
         btnCreate = new JButton("새 블로그 작성");
         btnCreate.addActionListener(e -> 
-                BlogCreateFrame.showBlogCreateFrame(frame));
+                BlogCreateFrame.showBlogCreateFrame(frame, BlogMain.this));
         btnCreate.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnCreate);
         
@@ -132,8 +137,34 @@ public class BlogMain {
         buttonPanel.add(btnDetails);
         
         btnDelete = new JButton("삭제");
+        btnDelete.addActionListener(e -> deleteBlog());
         btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnDelete);
+    }
+    
+    private void deleteBlog() {
+        // JTable에서 선택된 행을 찾음.
+        int index = table.getSelectedRow();
+        if (index == -1) { // 선택된 행이 없는 경우
+            JOptionPane.showMessageDialog(
+                    frame, 
+                    "테이블에서 삭제할 행을 먼저 선택하세요.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 사용자에게 삭제 여부를 확인.
+        int confirm = JOptionPane.showConfirmDialog(
+                frame, 
+                "정말 삭제할까요?", 
+                "삭제 확인", 
+                JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            // TODO: JTable에서 선택된 행의 첫번째 컬럼(번호 - 블로그 아이디) 값을 읽고,
+            // DAO 메서드를 호출해서, DB 테이블에서 행을 삭제.
+        }
+        
     }
     
     private void initializeTable() {
@@ -153,6 +184,12 @@ public class BlogMain {
         }
         
         table.setModel(model);
+    }
+
+    // BlogCreateFrame.CreateNotify 인터페이스를 구현(implements)하기 위해서.
+    @Override
+    public void notifyCreateSuccess() {
+        initializeTable();
     }
 
 }

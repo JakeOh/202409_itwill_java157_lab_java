@@ -19,6 +19,10 @@ import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
 
 public class BlogCreateFrame extends JFrame {
+    
+    public interface CreateNotify {
+        void notifyCreateSuccess();
+    }
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -36,16 +40,17 @@ public class BlogCreateFrame extends JFrame {
     
     private BlogDao blogDao;
     private Component parentComponent;
+    private CreateNotify app;
 
     /**
      * Launch the application.
      */
-    public static void showBlogCreateFrame(Component parentComponent) {
+    public static void showBlogCreateFrame(Component parentComponent, CreateNotify app) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    BlogCreateFrame frame = new BlogCreateFrame(parentComponent);
+                    BlogCreateFrame frame = new BlogCreateFrame(parentComponent, app);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -55,9 +60,10 @@ public class BlogCreateFrame extends JFrame {
     }
 
     // 생성자
-    private BlogCreateFrame(Component parentComponent) {
+    private BlogCreateFrame(Component parentComponent, CreateNotify app) {
         this.blogDao = BlogDao.INSTANCE;
         this.parentComponent = parentComponent;
+        this.app = app;
         initialize();
     }
     
@@ -142,7 +148,15 @@ public class BlogCreateFrame extends JFrame {
         String content = textContent.getText();
         String author = textAuthor.getText();
         
-        // TODO: 제목, 내용, 작성자가 비어 있으면 사용자에게 경고 메시지를 주고 메서드를 종료.
+        // 제목, 내용, 작성자가 비어 있으면 사용자에게 경고 메시지를 주고 메서드를 종료.
+        if (title.equals("") || content.equals("") || author.equals("")) {
+            JOptionPane.showMessageDialog(
+                    BlogCreateFrame.this, 
+                    "제목, 내용, 작성자는 반드시 입력해야 합니다.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         // Blog 객체 생성
         Blog blog = Blog.builder().title(title).content(content).author(author).build(); 
@@ -152,7 +166,8 @@ public class BlogCreateFrame extends JFrame {
         if (result == 1) { // 1개 행이 삽입됨.
             JOptionPane.showMessageDialog(BlogCreateFrame.this, "새 블로그 작성 성공");
             
-            // TODO: 메인 창(BlogMain)에게 insert 성공했다고 알려줌.
+            // 메인 창(BlogMain)에게 insert 성공했다고 알려줌.
+            app.notifyCreateSuccess();
             
             dispose(); // 창 닫기.
         } else { // insert 실패.
