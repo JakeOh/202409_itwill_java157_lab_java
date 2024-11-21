@@ -138,14 +138,19 @@ public class BlogMain {
     private void initializeTable() {
         // Controller(DAO)의 메서드를 호출해서 DB에 저장된 데이터를 읽어옴.
         List<Blog> list = blogDao.read();
-        
+        resetTableModel(list);
+    }
+    
+    private void resetTableModel(List<Blog> list) {
         model = new DefaultTableModel(null, COLUMN_NAMES);
+        
         for (Blog b : list) {
             Object[] rowData = {
                     b.getId(), b.getTitle(), b.getAuthor(), b.getCreatedTime()
             };
             model.addRow(rowData);
         }
+        
         table.setModel(model);
     }
 

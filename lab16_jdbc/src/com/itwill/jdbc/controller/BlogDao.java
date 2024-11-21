@@ -18,6 +18,7 @@ import com.itwill.jdbc.model.Blog;
 import oracle.jdbc.OracleDriver;
 
 // MVC 아키텍쳐 Controller를 담당하는 객체. DAO(Data Access Object).
+// CRUD(Create, Read, Update, Delete):
 // DB 테이블에서 select, insert, update, delete 쿼리를 실행하고 결과를 리턴하는 기능.
 public enum BlogDao {
     INSTANCE; // BlogDao 타입의 싱글톤(singleton) 객체.
