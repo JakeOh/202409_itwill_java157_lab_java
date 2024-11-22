@@ -20,8 +20,6 @@ import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
 import com.itwill.jdbc.view.BlogCreateFrame.CreateNotify;
 import com.itwill.jdbc.view.BlogDetailsFrame.UpdateNotify;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 // MVC 아키텍쳐에서 View를 담당하는 객체.
 public class BlogMain implements CreateNotify, UpdateNotify {
@@ -107,6 +105,7 @@ public class BlogMain implements CreateNotify, UpdateNotify {
         textSearchKeyword.setColumns(20);
         
         btnSearch = new JButton("검색");
+        btnSearch.addActionListener(e -> searchBlogs());
         btnSearch.setFont(new Font("D2Coding", Font.PLAIN, 20));
         searchPanel.add(btnSearch);
         
@@ -143,6 +142,25 @@ public class BlogMain implements CreateNotify, UpdateNotify {
         btnDelete.addActionListener(e -> deleteBlog());
         btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnDelete);
+    }
+    
+    private void searchBlogs() {
+        // 검색 종류(제목, 내용, 제목+내용, 작성자)를 찾음.
+        int type = comboBox.getSelectedIndex();
+        
+        // 검색어를 JTextField에서 읽음.
+        String keyword = textSearchKeyword.getText();
+        if (keyword.equals("")) {
+            JOptionPane.showMessageDialog(
+                    frame, 
+                    "검색어를 입력하세요.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        List<Blog> blogs = blogDao.read(type, keyword);
+        resetTableModel(blogs);
     }
     
     private void showBlogDetails() {
