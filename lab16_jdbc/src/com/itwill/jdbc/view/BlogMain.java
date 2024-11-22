@@ -20,6 +20,8 @@ import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
 import com.itwill.jdbc.view.BlogCreateFrame.CreateNotify;
 import com.itwill.jdbc.view.BlogDetailsFrame.UpdateNotify;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 // MVC 아키텍쳐에서 View를 담당하는 객체.
 public class BlogMain implements CreateNotify, UpdateNotify {
@@ -122,6 +124,7 @@ public class BlogMain implements CreateNotify, UpdateNotify {
         frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         
         btnReadAll = new JButton("목록 보기");
+        btnReadAll.addActionListener(e -> initializeTable());
         btnReadAll.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnReadAll);
         
@@ -225,8 +228,7 @@ public class BlogMain implements CreateNotify, UpdateNotify {
     // 블로그 제목/내용 업데이트 성공했을 때, BlogDetailsFrame이 호출할 메서드.
     @Override
     public void notifyUpdateSuccess() {
-        // TODO Auto-generated method stub
-        
+        initializeTable(); // 테이블 새로고침.
     }
 
 }

@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -16,6 +17,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BlogDetailsFrame extends JFrame {
     
@@ -174,6 +177,7 @@ public class BlogDetailsFrame extends JFrame {
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
         
         btnUpdate = new JButton("업데이트");
+        btnUpdate.addActionListener(e -> updateBlog());
         btnUpdate.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnUpdate);
         
@@ -181,6 +185,32 @@ public class BlogDetailsFrame extends JFrame {
         btnCancel.addActionListener(e -> dispose());
         btnCancel.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnCancel);
+    }
+    
+    private void updateBlog() {
+        // 제목, 내용을 읽음.
+        String title = textTitle.getText();
+        String content = textContent.getText();
+        if (title.equals("") || content.equals("")) {
+            JOptionPane.showMessageDialog(
+                    BlogDetailsFrame.this, 
+                    "제목과 내용은 반드시 입력해야 합니다.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // DAO의 메서드를 호출해서 업데이트를 실행.
+        Blog blog = Blog.builder().id(id).title(title).content(content).build();
+        int result = blogDao.update(blog);
+        if (result == 1) { // 1개 행이 업데이트됨.
+            JOptionPane.showMessageDialog(BlogDetailsFrame.this, "업데이트 성공");
+            app.notifyUpdateSuccess(); // BlogMain 창에게 업데이트 성공을 알려줌.
+            dispose(); // 현재 창 닫기.
+        } else { // 업데이트 실패
+            JOptionPane.showMessageDialog(BlogDetailsFrame.this, "업데이트 실패");
+        }
+        
     }
     
     private void initializeBlog() {

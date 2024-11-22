@@ -221,7 +221,7 @@ public enum BlogDao {
             TBL_BLOGS, COL_TITLE, COL_CONTENT, COL_MODIFIED_TIME, COL_ID);
     
     // private int update(String title, String content, Integer id) {}
-    private int update(Blog blog) {
+    public int update(Blog blog) {
         int result = 0;
         
         Connection conn = null;
@@ -244,5 +244,14 @@ public enum BlogDao {
         
         return result;
     }
+    
+    // 대/소문자 구분없이 제목에 포함된 문자열로 검색하기.
+    private static final String SQL_SELECT_BY_TITLE = String.format(
+            "select * from %s where upper(%s) like upper(?) order by %s desc",
+            TBL_BLOGS, COL_TITLE, COL_ID);
+    
+    // 대/소문자 구분없이 내용에 포함된 문자열로 검색하기.
+    
+    
     
 }
