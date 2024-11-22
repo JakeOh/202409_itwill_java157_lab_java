@@ -132,9 +132,7 @@ public class BlogMain implements CreateNotify, UpdateNotify {
         buttonPanel.add(btnCreate);
         
         btnDetails = new JButton("상세보기");
-        // TODO
-        btnDetails.addActionListener(e ->
-                BlogDetailsFrame.showBlogDetailsFrame(frame, BlogMain.this));
+        btnDetails.addActionListener(e -> showBlogDetails());
         btnDetails.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnDetails);
         
@@ -142,6 +140,25 @@ public class BlogMain implements CreateNotify, UpdateNotify {
         btnDelete.addActionListener(e -> deleteBlog());
         btnDelete.setFont(new Font("D2Coding", Font.PLAIN, 20));
         buttonPanel.add(btnDelete);
+    }
+    
+    private void showBlogDetails() {
+        // JTable에서 선택된 행의 인덱스를 찾음.
+        int index = table.getSelectedRow();
+        if (index == -1) { // 선택된 행이 없는 경우
+            JOptionPane.showMessageDialog(
+                    frame, 
+                    "테이블에서 상세보기를 할 행을 먼저 선택하세요.", 
+                    "경고", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // 선택된 행에서 블로그 아이디 값을 찾음.
+        Integer id = (Integer) model.getValueAt(index, 0);
+        
+        // 블로그 상세보기 창을 실행.
+        BlogDetailsFrame.showBlogDetailsFrame(frame, BlogMain.this, id);
     }
     
     private void deleteBlog() {
