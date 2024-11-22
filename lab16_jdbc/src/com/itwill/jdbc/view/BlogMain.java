@@ -1,6 +1,7 @@
 package com.itwill.jdbc.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.List;
@@ -113,6 +114,10 @@ public class BlogMain implements CreateNotify, UpdateNotify {
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         
         table = new JTable();
+        table.getTableHeader().setFont(new Font("D2Coding", Font.PLAIN, 20));
+        table.getTableHeader().setPreferredSize(new Dimension(0, 40));
+        table.setFont(new Font("D2Coding", Font.PLAIN, 20));
+        table.setRowHeight(40);
         scrollPane.setViewportView(table);
         
         // JTable의 컬럼 이름 설정.
