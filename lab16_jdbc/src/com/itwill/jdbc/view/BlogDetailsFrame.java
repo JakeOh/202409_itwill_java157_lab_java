@@ -17,8 +17,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.itwill.jdbc.controller.BlogDao;
 import com.itwill.jdbc.model.Blog;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class BlogDetailsFrame extends JFrame {
     
